@@ -77,7 +77,7 @@ unlink($tempFile);
 
 // Test: quotes trimmed
 $tempFile = tempnam(sys_get_temp_dir(), 'env_');
-file_put_contents($tempFile, 'KEY="quoted"\n');
+file_put_contents($tempFile, "KEY=\"quoted\"\n");
 $parsed = parse_env($tempFile);
 assert_equal('quoted', $parsed['KEY'] ?? null, 'parse_env: double quotes trimmed');
 unlink($tempFile);
