@@ -307,6 +307,7 @@ return [
     */
 
     'menu' => [
+        ['text' => 'Dashboard', 'url' => 'admin/dashboard', 'icon' => 'fas fa-tachometer-alt', 'can' => 'dashboard.read'],
         ['text' => 'Users', 'url' => 'admin/users', 'icon' => 'fas fa-users', 'can' => 'users.read'],
         ['text' => 'Roles', 'url' => 'admin/roles', 'icon' => 'fas fa-user-tag', 'can' => 'roles.read'],
         ['text' => 'Permissions', 'url' => 'admin/permissions', 'icon' => 'fas fa-key', 'can' => 'permissions.read'],
