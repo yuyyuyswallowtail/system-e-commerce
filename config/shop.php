@@ -135,4 +135,32 @@ return [
             'refunded' => 'refunded',
         ],
     ],
+    'order' => [
+        'statuses' => [
+            'awaiting_payment' => 'awaiting_payment',
+            'paid' => 'paid',
+            'processing' => 'processing',
+            'shipped' => 'shipped',
+            'completed' => 'completed',
+            'cancelled' => 'cancelled',
+        ],
+        'cancel_reasons' => [
+            'payment_failed' => 'payment_failed',
+            'payment_expired' => 'payment_expired',
+            'refunded' => 'refunded',
+            'owner' => 'owner_cancelled',
+        ],
+        'paid_after_cancel_log' => 'paid_after_cancel',
+        'revenue_statuses' => ['paid', 'processing', 'shipped', 'completed'],
+        'note_max' => 500,
+        'shipping_rules' => [
+            'name' => ['required', 'string', 'max:100'],
+            'phone' => ['required', 'string', 'regex:/^[0-9+() -]{6,20}$/'],
+            'address_line1' => ['required', 'string', 'max:150'],
+            'address_line2' => ['nullable', 'string', 'max:150'],
+            'city' => ['required', 'string', 'max:100'],
+            'postal_code' => ['required', 'string', 'max:20'],
+            'country' => ['required', 'string', 'alpha', 'size:2'],
+        ],
+    ],
 ];

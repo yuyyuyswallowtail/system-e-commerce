@@ -74,4 +74,10 @@ return [
         'sortable' => ['status', 'amount', 'created_at', 'paid_at'],
         'default_sort' => ['created_at', 'desc'],
     ],
+    'orders' => [
+        'searchable' => ['orders.uuid', 'users.email'],
+        'filterable' => ['orders.status'],
+        'sortable' => ['orders.created_at', 'orders.total_amount', 'orders.status'],
+        'default_sort' => ['orders.created_at', 'desc'],
+    ],
 ];
