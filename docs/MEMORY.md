@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 07 (content) stage 1 done.
+Last updated: 2026-11-26, prompt 07 (content) stage 2 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -21,7 +21,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 04 | 04-cart.md (2 stages) | Cart | feat/04-cart | done | feat(cart): add cart pages and admin cart list |
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | done | feat(order): add scheduled expiry and checkout journey test |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/06-history-notification | done | feat(notification): add order and payment notifications |
-| 07 | 07-content.md (2 stages) | Content | feat/07-content | in-progress | feat(content): add schema, article service, and article directory contract |
+| 07 | 07-content.md (2 stages) | Content | feat/07-content | done | feat(content): add public and admin article pages |
 | 08 | 08-comment.md (2 stages) | Comment | feat/comment | not-started | |
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/dashboard | not-started | |
 | 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/finalize | not-started | |
@@ -39,11 +39,12 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 07 stage 1 done. Next: prompt 07 stage 2 (public and admin article pages, markdown preview, menu) on branch feat/07-content.
+Prompt 07 done (both stages) on branch feat/07-content. Next: the next prompt in the series.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
 - 2026-11-26 | claude | prompt 07 stage 1: articles migration, Article model (uuid, unique slug incl. soft-deleted, activitylog without body), ArticlePresenter (sanitized markdown), ArticleService (create, update, publish, unpublish, archive, delete, restore, uploadCover), ArticleDirectory contract and service, ContentStats, ArticlePublished, ContentServiceProvider, config shop.article and tables.articles, tests (red 32 failed, green 32 passed, skipped 0) | feat(content): add schema, article service, and article directory contract | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 07 stage 2: public pages /articles and /articles/{slug} (published only, staff preview), admin list and form with publish, unpublish, archive, delete, restore, cover upload and sanitized markdown preview, menu entry, tests | feat(content): add public and admin article pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 06 stage 2: notifications table migration (Laravel database notifications), six notification classes on a shared base (type from shop.notification_types, title, body, data with order uuid, amount, currency, event_uuid), NotifyUser listener (idempotent by event_uuid, missing user skipped and logged, failures logged), NotificationServiceProvider queueing the listener for existing classes only, config/notification.php (events, tries, poll_seconds default 0), NotificationList (/notifications, unread filter, mark read, mark all read, delete, other ids 404) and UnreadBadge Livewire component in the storefront navbar, menu entry, layout probe test made safe for the real table (full suite 562 passed, skipped 0) | feat(notification): add order and payment notifications | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 06 stage 1: history_events migration, append-only HistoryEvent model (update and delete throw), RecordHistory listener (insertOrIgnore on event_uuid, secret keys stripped, failures logged), HistoryServiceProvider registering config events that exist and queueing the listener with failures logged, config/history.php and tables.history, MyHistory (/me/history) and HistoryIndex (/admin/history, history.read) pages, menu entries, tests (history suite 35 passed, full suite 542 passed, skipped 0) | feat(history): add append-only history events and pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 05 stage 4: scheduled inventory:release-expired and payments:expire every minute with withoutOverlapping in routes/console.php, schedule tests, expiry-through-command test, sequential race tests (last unit, idempotent replay, double pay, pay after cancel, cancel after paid), register to paid journey test, doc notes (green 507 passed, skipped 0) | feat(order): add scheduled expiry and checkout journey test | STAGE CHECK green | none
