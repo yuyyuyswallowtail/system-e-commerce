@@ -110,3 +110,20 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - Pages: `/cart` (CartPage, auth) and `/admin/carts` (CartIndex, `carts.read`). The add button is the Livewire component alias `cart.add-button` (registered in CartServiceProvider, same convention as `inventory.availability-badge`); it is rendered on the public product list and detail views and redirects guests to login.
 - The checkout link on `/cart` is rendered only when the named route `checkout` exists and no line is unavailable. A line is unavailable when the catalog lookup fails, the product is deleted, or its status differs from `shop.cart_available_product_status`.
 - The admin list joins a derived `users` subquery limited to id, name and email, so the whitelisted columns in `config/tables.php` stay unambiguous; totals are computed from the eager loaded items.
+
+## Payment build notes (prompt 05)
+- `PaymentService` (class, implements `Payments`) also has `pay(paymentUuid, User)`, `fail(paymentUuid, User)`, `expirePending(): int` and `refund(paymentUuid, reason, User)`. It resolves `OrderPaymentHandler` lazily at call time.
+- `cancelByOrder`: pending becomes cancelled; no payment, cancelled, failed, expired or refunded is a no-op; paid is a ConflictException.
+- `pay` and `fail` throw NotFoundException for a non-owner, ConflictException when not pending; an expired payment is marked expired, the handler is called with expired, the transaction commits, then ConflictException is thrown. `fail` needs `payment_simulate_failure`. `refund` needs `payments.refund` (AuthorizationException), a reason up to `shop.payment.refund_reason_max`, and a paid payment.
+- `expirePending` handles each payment in its own transaction; a payment whose handler call throws stays pending and is reported.
+- Config: `shop.payment.{reference_prefix, reference_bytes, refund_reason_max, statuses, results, events}` and `tables.payments`. DTO `PaymentDto` lives in `App\Modules\Payment\DTO`.
+
+## Checkout pages build notes (prompt 05)
+- Routes: `checkout`, `orders.index`, `orders.show` (login only, Order module), `admin.orders.index`, `admin.orders.show` (can:orders.read), `admin.payments.index` (can:payments.read, Payment module).
+- `OrderShow` pay and fail call `PaymentService` for the owner only; fail is refused with 403 unless `payment_simulate_failure` is true; cancel uses `OrderPolicy::cancel`.
+- `OrderDetail::changeStatus` needs `orders.manage`; `PaymentIndex::refund` needs `payments.refund` and a reason.
+- The shipping form fields come from `shop.order.shipping_rules`; domain errors map to `form.<field>` or `cart`.
+
+## Schedule build notes (prompt 05)
+- `routes/console.php` schedules `inventory:release-expired` and `payments:expire` every minute with `withoutOverlapping`.
+- An unpaid order is cancelled with reason `payment_expired` and its reservation released by `payments:expire` once the payment passes `expires_at`.

@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 04 (cart) stage 2 done.
+Last updated: 2026-11-26, prompt 05 (checkout) stage 1 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -19,7 +19,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/02-catalog | done | feat(catalog): add public product pages |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/03-inventory | done | feat(inventory): show availability on public product pages |
 | 04 | 04-cart.md (2 stages) | Cart | feat/04-cart | done | feat(cart): add cart pages and admin cart list |
-| 05 | 05-checkout.md (4 stages) | Payment + Order | feat/checkout | not-started | |
+| 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | done | feat(order): add scheduled expiry and checkout journey test |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/history-notification | not-started | |
 | 07 | 07-content.md (2 stages) | Content | feat/content | not-started | |
 | 08 | 08-comment.md (2 stages) | Comment | feat/comment | not-started | |
@@ -38,10 +38,15 @@ php artisan test
 ```
 
 ## 4. Next step
-Run prompt 05 stage 1 (checkout: Payment and Order) from the branch named in the prompt 05 row.
+
+Prompt 05 is done. Next: prompt 06 (History and Notification) on branch feat/history-notification.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 05 stage 4: scheduled inventory:release-expired and payments:expire every minute with withoutOverlapping in routes/console.php, schedule tests, expiry-through-command test, sequential race tests (last unit, idempotent replay, double pay, pay after cancel, cancel after paid), register to paid journey test, doc notes (green 507 passed, skipped 0) | feat(order): add scheduled expiry and checkout journey test | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 05 stage 3: member pages CheckoutPage (form object, locked idempotency key, domain errors mapped to fields or flash), OrderList (status filter), OrderShow (pay, fail only with the config flag, cancel while awaiting_payment), admin OrderIndex (search, status, date range), OrderDetail (status change needs orders.manage), PaymentIndex (status filter, refund needs payments.refund), routes with can middleware, menu entries, checkout route name, views, tests (green 499 passed, skipped 0) | feat(order): add checkout, order, and payment pages | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 05 stage 2: orders and order_items migrations, Order and OrderItem models, CheckoutService (replay, cart, catalog re-price, open-orders cap, one transaction with reserve and payment create), OrderPaymentHandlerImpl bound to the Payment contract, OrderService (cancelByOwner, changeStatus, filtered lists), OrderPolicy, PaymentPolicy, four order events, OrderStats, OrderServiceProvider, config lists, tests (green 464 passed, skipped 0) | feat(order): add schema, checkout transaction, and payment handler | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 05 stage 1: payments and payment_events migrations, Payment and PaymentEvent models (uuid, activitylog), Payments and OrderPaymentHandler contracts, PaymentDto, PaymentService (create, byOrder, cancelByOrder, pay, fail, expirePending, refund), six payment events, PaymentStats, payments:expire command, PaymentServiceProvider, config shop.payment and tables.payments, tests (red 31 failed, green 31 passed, skipped 0) | feat(payment): add schema, payment service, and contracts | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 04 stage 2: /cart page (CartPage), cart.add-button on public product list and detail, admin carts list (CartIndex, carts.read), menu entries, tests (red 23 failed, green 59 cart tests passed, skipped 0) | feat(cart): add cart pages and admin cart list | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 04 stage 1: carts and cart_items migrations (active_key unique), Cart and CartItem models, CartService (getOrCreateActive, add, setQuantity, remove, clear, activeItems), CartReader contract with CartLine DTO, CartCleared event, CartServiceProvider, config lists, tests (red 34 failed 2 passed, green 36 passed, skipped 0) | feat(cart): add schema, cart service, and cart reader contract | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 03 stage 3: Livewire child component inventory.availability-badge (Inventory contract only, any exception renders no badge) embedded in the Catalog public list and detail views, tests (present, low, out, contract throws) | feat(inventory): show availability on public product pages | STAGE CHECK green | none

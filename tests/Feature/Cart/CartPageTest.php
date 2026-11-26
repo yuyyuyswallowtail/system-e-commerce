@@ -130,10 +130,11 @@ it('shows a deleted product as unavailable', function () {
     Livewire::actingAs($user)->test(CartPage::class)->assertSee('Unavailable');
 });
 
-it('renders no checkout link while the checkout route does not exist', function () {
+it('renders the checkout link now that the checkout route exists', function () {
     $product = CartKit::product();
     $user = IdentityKit::user();
     cartPageAdd($user->id, $product->uuid, 1);
 
-    Livewire::actingAs($user)->test(CartPage::class)->assertDontSee('Proceed to checkout');
+    expect(Route::has('checkout'))->toBeTrue();
+    Livewire::actingAs($user)->test(CartPage::class)->assertSee('Proceed to checkout');
 });
