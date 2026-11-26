@@ -26,6 +26,7 @@
                         <h5 class="card-title"><a href="{{ route('products.show', ['product' => $product->uuid]) }}">{{ $product->name }}</a></h5>
                         <p class="card-text text-muted mb-1">{{ $product->category?->name }}</p>
                         <p class="card-text font-weight-bold">{{ \App\Support\Money::format($product->price_amount, $product->currency) }}</p>
+                        <livewire:inventory.availability-badge :product-uuid="$product->uuid" :key="'badge-'.$product->uuid" />
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 03 (inventory) stage 2 done.
+Last updated: 2026-11-26, prompt 03 (inventory) done, all 3 stages.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -17,7 +17,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | done | feat(foundation): add config catalog, support classes, and layout wiring |
 | 01 | 01-identity.md (3 stages) | Identity | feat/01-identity | done | feat(identity): add admin users, roles, permissions, audit, and sessions |
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/02-catalog | done | feat(catalog): add public product pages |
-| 03 | 03-inventory.md (3 stages) | Inventory | feat/03-inventory | in-progress | feat(inventory): add admin stock pages |
+| 03 | 03-inventory.md (3 stages) | Inventory | feat/03-inventory | done | feat(inventory): show availability on public product pages |
 | 04 | 04-cart.md (2 stages) | Cart | feat/cart | not-started | |
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/checkout | not-started | |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/history-notification | not-started | |
@@ -38,10 +38,11 @@ php artisan test
 ```
 
 ## 4. Next step
-Prompt 03 stage 3: availability badge on the Catalog public list and detail pages through the Inventory contract.
+Run prompt 04 (cart, branch feat/04-cart from feat/03-inventory).
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 03 stage 3: Livewire child component inventory.availability-badge (Inventory contract only, any exception renders no badge) embedded in the Catalog public list and detail views, tests (present, low, out, contract throws) | feat(inventory): show availability on public product pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 03 stage 2: admin StockIndex (list, low-stock filter, product names via ProductCatalog::lookup with uuid fallback) and StockShow (movements, adjust form gated by stock.adjust), routes with can middleware, menu entry, views, tests (green 328 passed, skipped 0) | feat(inventory): add admin stock pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 03 stage 1: stock_items, stock_reservations, stock_movements migrations, models, Inventory contract, InventoryService (reserve, commit, release, adjust, expire), InsufficientStockException, four events, inventory:release-expired command, InventoryStats, InventoryServiceProvider, config lists, tests (green, skipped 0) | feat(inventory): add schema, reservation service, and inventory contract | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 02 final audit: moved hardcoded product status roles and public sortable fields into config/shop.php, added config test | fix(catalog): read status roles from config | STAGE CHECK green | none

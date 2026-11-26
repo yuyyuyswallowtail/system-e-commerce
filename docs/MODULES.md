@@ -100,3 +100,4 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - Config: `shop.inventory.reservation_max_items`, `shop.inventory.commit_reason`, `shop.inventory.statuses`. Table lists `stock` and `movements` are in `config/tables.php`.
 - `stock_reservations` has unique(order_uuid, product_uuid) and index(status, expires_at).
 - Admin pages build notes: routes `admin.stock.index` and `admin.stock.show` (productUuid must be a uuid; 404 unless the product has stock or exists in the Catalog). Adjust action requires `stock.adjust`; `order_commit` is not offered as a manual reason.
+- Catalog enrichment: the Livewire component `inventory.availability-badge` (prop `productUuid`, locked) is embedded in `catalog/product-list` and `catalog/product-show` views. It calls `Inventory::availability` and renders nothing when the call throws.
