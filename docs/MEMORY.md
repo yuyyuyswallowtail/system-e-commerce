@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 00 (foundation) done, both stages.
+Last updated: 2026-11-26, prompt 01 (identity) stage 1 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -15,7 +15,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | # | Prompt | Module | Branch | Status | Last commit message |
 |---|---|---|---|---|---|
 | 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | done | feat(foundation): add config catalog, support classes, and layout wiring |
-| 01 | 01-identity.md (3 stages) | Identity | feat/identity | not-started | |
+| 01 | 01-identity.md (3 stages) | Identity | feat/01-identity | in-progress (stage 1 done) | feat(identity): add schema, services, and seeders |
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/catalog | not-started | |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/inventory | not-started | |
 | 04 | 04-cart.md (2 stages) | Cart | feat/cart | not-started | |
@@ -38,10 +38,11 @@ php artisan test
 ```
 
 ## 4. Next step
-Run prompt 01 (identity, branch feat/identity created from feat/00-foundation). Foundation provides config/shop.php, permissions.php, tables.php, history.php, App\Support, layouts::app and layouts::storefront.
+Run prompt 01 STAGE 2 (Fortify wiring, AdminLTE auth views, login lockout, /me, /users/{user}, follow) on branch feat/01-identity.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 01 stage 1: users migration, user_follows, User model, seeders, UserService, FollowService, RoleService, SessionAdminService, events, EnsureUserActive, Gate::before, config/tables.php lists, tests (green 104 passed, skipped 0) | feat(identity): add schema, services, and seeders | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 00 final audit: added authenticated storefront layout test (user name, unread badge, logout form); no other gaps found | fix(foundation): test the authenticated storefront navigation | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 00 stage 2: config catalog, support classes (Money, Sql, exceptions, DomainEvent, StatsProvider, HasTableQuery), AppServiceProvider strict mode, AdminLTE config, layouts::app and layouts::storefront, tests (red 32 failed 10 passed, green 42 passed, skipped 0) | feat(foundation): add config catalog, support classes, and layout wiring | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 00 stage 1: Laravel 13 skeleton, packages (versions in section 8), .env keys, .gitignore, scripts/db-create-test.php, phpunit.xml, Pest smoke test | chore: install laravel 13 with livewire, adminlte, fortify and spatie packages | STAGE CHECK green | none

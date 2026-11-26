@@ -17,6 +17,13 @@ return [
     'user_statuses' => ['active', 'suspended', 'banned'],
     'system_roles' => ['super_admin', 'admin', 'member'],
     'presence_window_seconds' => 300,
+    'default_user_status' => 'active',
+    'default_role' => 'member',
+    'super_admin_role' => 'super_admin',
+    'seed_admin' => [
+        'email' => env('SEED_ADMIN_EMAIL'),
+        'password' => env('SEED_ADMIN_PASSWORD'),
+    ],
 
     'password_rules' => [
         'min' => 10,
