@@ -80,4 +80,12 @@ return [
         'sortable' => ['orders.created_at', 'orders.total_amount', 'orders.status'],
         'default_sort' => ['orders.created_at', 'desc'],
     ],
+
+    'history' => [
+        'searchable' => ['subject_uuid'],
+        'filterable' => ['subject_type', 'action'],
+        'sortable' => ['occurred_at', 'subject_type', 'action'],
+        'default_sort' => ['occurred_at', 'desc'],
+    ],
+
 ];

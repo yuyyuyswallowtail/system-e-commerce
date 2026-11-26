@@ -127,3 +127,8 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 ## Schedule build notes (prompt 05)
 - `routes/console.php` schedules `inventory:release-expired` and `payments:expire` every minute with `withoutOverlapping`.
 - An unpaid order is cancelled with reason `payment_expired` and its reservation released by `payments:expire` once the payment passes `expires_at`.
+
+## History build notes (prompt 06)
+- `config/history.php` keys: `events` (class => [subject_type, action]), `subject_types`, `actions`, `tries`, `secret_keys` (detail keys containing a fragment are dropped).
+- `HistoryServiceProvider::registerListeners()` loops `events`, skips classes that do not exist, and queues `RecordHistory` through a `CallQueuedListener` job (tries from config, after commit). A payload or queue failure is logged and never reaches the dispatcher.
+- Routes: `history.mine` GET /me/history (auth), `admin.history` GET /admin/history (history.read). Both lists use `config/tables.php` [`history`].

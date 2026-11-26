@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 05 (checkout) stage 1 done.
+Last updated: 2026-11-26, prompt 06 (history-notification) stage 1 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -20,7 +20,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/03-inventory | done | feat(inventory): show availability on public product pages |
 | 04 | 04-cart.md (2 stages) | Cart | feat/04-cart | done | feat(cart): add cart pages and admin cart list |
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | done | feat(order): add scheduled expiry and checkout journey test |
-| 06 | 06-history-notification.md (2 stages) | History, Notification | feat/history-notification | not-started | |
+| 06 | 06-history-notification.md (2 stages) | History, Notification | feat/06-history-notification | in-progress | feat(history): add append-only history events and pages |
 | 07 | 07-content.md (2 stages) | Content | feat/content | not-started | |
 | 08 | 08-comment.md (2 stages) | Comment | feat/comment | not-started | |
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/dashboard | not-started | |
@@ -39,10 +39,11 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 05 is done. Next: prompt 06 (History and Notification) on branch feat/history-notification.
+Prompt 06 stage 1 (History) is done. Next: prompt 06 stage 2 (Notification) on branch feat/06-history-notification.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 06 stage 1: history_events migration, append-only HistoryEvent model (update and delete throw), RecordHistory listener (insertOrIgnore on event_uuid, secret keys stripped, failures logged), HistoryServiceProvider registering config events that exist and queueing the listener with failures logged, config/history.php and tables.history, MyHistory (/me/history) and HistoryIndex (/admin/history, history.read) pages, menu entries, tests (history suite 35 passed, full suite 542 passed, skipped 0) | feat(history): add append-only history events and pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 05 stage 4: scheduled inventory:release-expired and payments:expire every minute with withoutOverlapping in routes/console.php, schedule tests, expiry-through-command test, sequential race tests (last unit, idempotent replay, double pay, pay after cancel, cancel after paid), register to paid journey test, doc notes (green 507 passed, skipped 0) | feat(order): add scheduled expiry and checkout journey test | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 05 stage 3: member pages CheckoutPage (form object, locked idempotency key, domain errors mapped to fields or flash), OrderList (status filter), OrderShow (pay, fail only with the config flag, cancel while awaiting_payment), admin OrderIndex (search, status, date range), OrderDetail (status change needs orders.manage), PaymentIndex (status filter, refund needs payments.refund), routes with can middleware, menu entries, checkout route name, views, tests (green 499 passed, skipped 0) | feat(order): add checkout, order, and payment pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 05 stage 2: orders and order_items migrations, Order and OrderItem models, CheckoutService (replay, cart, catalog re-price, open-orders cap, one transaction with reserve and payment create), OrderPaymentHandlerImpl bound to the Payment contract, OrderService (cancelByOwner, changeStatus, filtered lists), OrderPolicy, PaymentPolicy, four order events, OrderStats, OrderServiceProvider, config lists, tests (green 464 passed, skipped 0) | feat(order): add schema, checkout transaction, and payment handler | STAGE CHECK green | none
