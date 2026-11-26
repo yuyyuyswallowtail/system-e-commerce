@@ -108,4 +108,31 @@ return [
         'directory' => 'products',
     ],
 
+    'payment' => [
+        'reference_prefix' => 'sim_',
+        'reference_bytes' => 8,
+        'refund_reason_max' => 255,
+        'statuses' => [
+            'pending' => 'pending',
+            'paid' => 'paid',
+            'failed' => 'failed',
+            'expired' => 'expired',
+            'cancelled' => 'cancelled',
+            'refunded' => 'refunded',
+        ],
+        'results' => [
+            'paid' => 'paid',
+            'failed' => 'failed',
+            'expired' => 'expired',
+            'refunded' => 'refunded',
+        ],
+        'events' => [
+            'created' => 'created',
+            'paid' => 'paid',
+            'failed' => 'failed',
+            'expired' => 'expired',
+            'cancelled' => 'cancelled',
+            'refunded' => 'refunded',
+        ],
+    ],
 ];

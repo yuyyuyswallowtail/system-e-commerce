@@ -68,4 +68,10 @@ return [
         'default_sort' => ['updated_at', 'desc'],
     ],
 
+    'payments' => [
+        'searchable' => ['order_uuid', 'provider_reference'],
+        'filterable' => ['status'],
+        'sortable' => ['status', 'amount', 'created_at', 'paid_at'],
+        'default_sort' => ['created_at', 'desc'],
+    ],
 ];
