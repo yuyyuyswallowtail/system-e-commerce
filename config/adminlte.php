@@ -322,6 +322,7 @@ return [
         ['text' => 'Payments', 'url' => 'admin/payments', 'icon' => 'fas fa-credit-card', 'can' => 'payments.read'],
         ['text' => 'History', 'url' => 'me/history', 'icon' => 'fas fa-clock', 'can' => null],
         ['text' => 'History admin', 'url' => 'admin/history', 'icon' => 'fas fa-stream', 'can' => 'history.read'],
+        ['text' => 'Notifications', 'url' => 'notifications', 'icon' => 'fas fa-bell', 'can' => null],
     ],
 
     /*
