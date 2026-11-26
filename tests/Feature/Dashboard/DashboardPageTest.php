@@ -128,3 +128,13 @@ it('refresh action reloads the stats from the providers', function (): void {
 
     expect($providers[0]->calls)->toBe(2);
 });
+
+it('forbids the refresh action for a user without dashboard.read', function (): void {
+    bindDashboard();
+
+    $component = Livewire::actingAs(IdentityKit::userWithPermissions(['dashboard.read']))->test(Dashboard::class);
+
+    $this->actingAs(IdentityKit::user());
+
+    $component->call('refresh')->assertForbidden();
+});
