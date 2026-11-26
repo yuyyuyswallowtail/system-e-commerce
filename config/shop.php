@@ -37,6 +37,10 @@ return [
     'login_decay_seconds' => 60,
 
     'product_statuses' => ['draft', 'active', 'inactive'],
+    'product_default_status' => 'draft',
+    'product_public_status' => 'active',
+    'product_public_sortable' => ['name', 'price_amount'],
+    'product_inactive_status' => 'inactive',
     'lookup_max_uuids' => 100,
     'availability_max_uuids' => 100,
 
@@ -97,6 +101,8 @@ return [
     'uploads' => [
         'mimes' => ['jpg', 'jpeg', 'png', 'webp'],
         'max_kb' => 2048,
+        'disk' => 'public',
+        'directory' => 'products',
     ],
 
 ];

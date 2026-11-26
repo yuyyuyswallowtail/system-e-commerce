@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 01 (identity) done, all 3 stages.
+Last updated: 2026-11-26, prompt 02 (catalog) done, all 3 stages, final audit applied.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -16,7 +16,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 |---|---|---|---|---|---|
 | 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | done | feat(foundation): add config catalog, support classes, and layout wiring |
 | 01 | 01-identity.md (3 stages) | Identity | feat/01-identity | done | feat(identity): add admin users, roles, permissions, audit, and sessions |
-| 02 | 02-catalog.md (3 stages) | Catalog | feat/catalog | not-started | |
+| 02 | 02-catalog.md (3 stages) | Catalog | feat/02-catalog | done | feat(catalog): add public product pages |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/inventory | not-started | |
 | 04 | 04-cart.md (2 stages) | Cart | feat/cart | not-started | |
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/checkout | not-started | |
@@ -38,10 +38,14 @@ php artisan test
 ```
 
 ## 4. Next step
-Run prompt 02 (catalog, branch feat/02-catalog from feat/01-identity).
+Run prompt 03 (inventory, branch feat/03-inventory from feat/02-catalog).
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 02 final audit: moved hardcoded product status roles and public sortable fields into config/shop.php, added config test | fix(catalog): read status roles from config | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 02 stage 3: public ProductList (/ and /products, active only, search, category filter, name/price sort, pagination) and ProductShow (/products/{product:uuid}, 404 for draft/inactive/deleted, staff with products.read preview) on storefront layout, welcome route moved to Catalog, tests (green 283 passed, skipped 0) | feat(catalog): add public product pages | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 02 stage 2: admin ProductIndex, ProductForm (create, update, status, image upload, delete, restore), CategoryIndex, catalog routes with can middleware, AdminLTE menu entries with can, views, tests (green 95 catalog tests passed, skipped 0) | feat(catalog): add admin products and categories | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 02 stage 1: catalog migrations, Product and Category models (uuid, slug, activitylog), ProductService, CategoryService, ProductCatalog contract and service, CatalogStats, ProductChanged, CatalogServiceProvider, factories, config lists, tests (green 222 passed, skipped 0) | feat(catalog): add schema, services, and product catalog contract | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 01 stage 3: admin users (list, form, status, roles, delete/restore/purge), roles, permissions, audit, sessions with online tab, menu entries with can, tests (green 175 passed, skipped 0) | feat(identity): add admin users, roles, permissions, audit, and sessions | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 01 stage 2: Fortify wiring (register via UserService, authenticateUsing rejects non-active, sha256 login limiter from config), AdminLTE auth views, /me profile and password, /users/{user:uuid} card with follow, tests (green 123 passed, skipped 0) | feat(identity): add authentication, profile, and follow pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 01 stage 1: users migration, user_follows, User model, seeders, UserService, FollowService, RoleService, SessionAdminService, events, EnsureUserActive, Gate::before, config/tables.php lists, tests (green 104 passed, skipped 0) | feat(identity): add schema, services, and seeders | STAGE CHECK green | none

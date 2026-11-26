@@ -312,6 +312,8 @@ return [
         ['text' => 'Permissions', 'url' => 'admin/permissions', 'icon' => 'fas fa-key', 'can' => 'permissions.read'],
         ['text' => 'Audit log', 'url' => 'admin/audit', 'icon' => 'fas fa-history', 'can' => 'audit.read'],
         ['text' => 'Sessions', 'url' => 'admin/sessions', 'icon' => 'fas fa-desktop', 'can' => 'sessions.read'],
+        ['text' => 'Products', 'url' => 'admin/products', 'icon' => 'fas fa-box', 'can' => 'products.read'],
+        ['text' => 'Categories', 'url' => 'admin/categories', 'icon' => 'fas fa-tags', 'can' => 'categories.manage'],
     ],
 
     /*

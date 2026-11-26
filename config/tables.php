@@ -35,8 +35,16 @@ return [
     'products' => [
         'searchable' => ['name', 'sku'],
         'filterable' => ['status', 'category_id'],
-        'sortable' => ['name', 'sku', 'price_amount', 'status', 'created_at'],
+        'deleted_modes' => ['without', 'with', 'only'],
+        'sortable' => ['name', 'price_amount', 'created_at', 'updated_at'],
         'default_sort' => ['created_at', 'desc'],
+    ],
+
+    'categories' => [
+        'searchable' => ['name', 'slug'],
+        'filterable' => ['parent_id'],
+        'sortable' => ['name', 'created_at', 'updated_at'],
+        'default_sort' => ['name', 'asc'],
     ],
 
 ];
