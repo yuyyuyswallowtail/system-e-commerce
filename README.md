@@ -1,58 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# system-e-commerce-laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modular monolith e-commerce application: public storefront (catalog, cart, checkout, orders, notifications, articles with comments) and an AdminLTE staff area (users, roles, catalog, stock, orders, payments, content, moderation, dashboard).
 
-## About Laravel
+## Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Part | Package | Version |
+|---|---|---|
+| Language | PHP | ^8.3 (built on 8.5) |
+| Framework | laravel/framework | 13.x |
+| UI components | livewire/livewire | 4.x |
+| Admin theme | jeroennoten/laravel-adminlte (AdminLTE 3) | 3.16 |
+| Roles and permissions | spatie/laravel-permission | 8.x |
+| Audit log | spatie/laravel-activitylog | 5.x |
+| Auth scaffolding | laravel/fortify | 1.x |
+| Tests | pestphp/pest | 4.x |
+| Database | MariaDB | |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Modules
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Module | Responsibility |
+|---|---|
+| Identity | users, roles, permissions, audit, sessions, profile, follows |
+| Catalog | products and categories, public product pages |
+| Inventory | stock, reservations, movements, expiry command |
+| Cart | one active cart per user, admin cart list |
+| Payment | simulated payments, refunds, expiry command |
+| Order | checkout, orders, status changes |
+| History | per-user and admin event history (queued listeners) |
+| Notification | database notifications on order and payment events |
+| Content | articles with Markdown, publish workflow |
+| Comment | comment threads on products and articles, moderation |
+| Dashboard | admin statistics from module stats providers |
 
-## Learning Laravel
+Modules talk to each other only through Contracts, DTOs and Events. Details are in docs/MODULES.md.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Install
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Run these commands from the repository root. After the copy, edit .env: set the DB_* values and SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+    composer install
+    cp .env.example .env
+    php artisan key:generate
+    php scripts/db-create-test.php
+    php artisan migrate
+    php artisan db:seed
+    php artisan storage:link
 
-## Agentic Development
+The seed step creates the roles and permissions and the admin account from the SEED_ADMIN_* values. In the local environment it also creates idempotent demo data (categories, products with stock, one article). The seeders never print passwords and never change existing users.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Run
 
-```bash
-composer require laravel/boost --dev
+    php artisan serve --host=127.0.0.1 --port=8000
+    php artisan queue:work
+    php artisan schedule:work
 
-php artisan boost:install
-```
+The queue worker handles the history and notification listeners. The scheduler runs inventory:release-expired and payments:expire every minute.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Tests
 
-## Contributing
+    php artisan test
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The suite includes journey tests (customer, admin, content, failure paths), an authorization matrix over every route, and a check that every permission code used in code exists in config/permissions.php.
 
-## Code of Conduct
+## Documentation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+All design documents live in docs/: ARCHITECTURE.md, MODULES.md, STACK.md, DATABASE.md, UI.md, CODE_STYLE.md, SECURITY.md, TESTING.md, DECISIONS.md and MEMORY.md (handoff status between sessions).
 
-## Security Vulnerabilities
+## Conventions
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- No hardcoded statuses, limits, TTLs, page sizes, currencies or permission codes: they live in config/*.php.
+- Money is stored as integer minor units plus a currency code.
+- Every route has a can: or auth middleware, and every Livewire action authorizes again.
+- Controllers and Livewire components stay thin; rules and transactions live in module Services.
+- Tests are written first with Pest; no skipped tests.
+- Commits follow type(scope): message.

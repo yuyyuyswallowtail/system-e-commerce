@@ -45,7 +45,7 @@
             <tbody>
                 @forelse ($comments as $comment)
                     <tr wire:key="comment-{{ $comment->id }}">
-                        <td>{!! nl2br(e(\Illuminate\Support\Str::limit((string) $comment->body, 200))) !!} @if ($comment->trashed()) <span class="badge badge-secondary">deleted</span> @endif</td>
+                        <td>@foreach (preg_split('/\R/', \Illuminate\Support\Str::limit((string) $comment->body, 200)) as $line){{ $line }}@if (! $loop->last)<br />@endif@endforeach @if ($comment->trashed()) <span class="badge badge-secondary">deleted</span> @endif</td>
                         <td>{{ $authors[$comment->user_id] ?? 'User #'.$comment->user_id }}</td>
                         <td>{{ $comment->entity_type }}</td>
                         <td><span class="badge badge-{{ $comment->status === 'visible' ? 'success' : 'warning' }}">{{ $comment->status }}</span></td>

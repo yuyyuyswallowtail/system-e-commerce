@@ -146,3 +146,9 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - `ArticleDirectoryService` implements `ArticleDirectory` (only published and not deleted are true, cap `shop.lookup_max_uuids`). `ContentStats` is tagged `module.stats`.
 - `ArticlePresenter::html()` is the only place that outputs unescaped HTML (Markdown, html_input strip, allow_unsafe_links false); `Article::bodyHtml()` uses it.
 - Pages build notes: routes `articles.index`, `articles.show` (slug; hidden articles are 404 unless the viewer has `articles.read`), `admin.articles.index`, `admin.articles.create`, `admin.articles.edit` (uuid, resolves deleted). Livewire components `ArticleList`, `ArticleShow`, `Admin\ArticleIndex`, `Admin\ArticleForm`. Publish, unpublish and archive need `articles.publish`; cover upload needs `articles.update`. The public list ignores the status filter.
+
+## Finalize build notes (prompt 10)
+- Journey tests live in tests/Feature/Journeys: customer, admin, content and failure journeys, the authorization matrix, the permission catalog check and the hardening checks.
+- Database\Seeders\DemoDataSeeder is idempotent and never changes users; DatabaseSeeder calls it only in the local environment, after RolesAndPermissionsSeeder and DemoAdminSeeder.
+- Comment bodies are rendered with escaped output and a br per line; the Markdown presenter in Content stays the only place with unescaped HTML.
+- Admin user and audit lists re-check users.read and audit.read in render(), and the user list whitelists its sort fields from config/tables.php.

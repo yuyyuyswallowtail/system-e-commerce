@@ -42,6 +42,8 @@ class AuditLog extends Component
 
     public function render(): View
     {
+        abort_unless(auth()->user()?->can('audit.read') === true, 403);
+
         $query = Activity::query()->with('causer');
 
         if ($this->validDate($this->dateFrom)) {
