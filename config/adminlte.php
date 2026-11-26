@@ -306,7 +306,13 @@ return [
     |
     */
 
-    'menu' => [],
+    'menu' => [
+        ['text' => 'Users', 'url' => 'admin/users', 'icon' => 'fas fa-users', 'can' => 'users.read'],
+        ['text' => 'Roles', 'url' => 'admin/roles', 'icon' => 'fas fa-user-tag', 'can' => 'roles.read'],
+        ['text' => 'Permissions', 'url' => 'admin/permissions', 'icon' => 'fas fa-key', 'can' => 'permissions.read'],
+        ['text' => 'Audit log', 'url' => 'admin/audit', 'icon' => 'fas fa-history', 'can' => 'audit.read'],
+        ['text' => 'Sessions', 'url' => 'admin/sessions', 'icon' => 'fas fa-desktop', 'can' => 'sessions.read'],
+    ],
 
     /*
     |--------------------------------------------------------------------------

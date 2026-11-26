@@ -6,6 +6,7 @@ return [
     'users' => [
         'searchable' => ['name', 'email'],
         'filterable' => ['status'],
+        'deleted_modes' => ['without', 'with', 'only'],
         'sortable' => ['name', 'email', 'status', 'created_at'],
         'default_sort' => ['created_at', 'desc'],
     ],

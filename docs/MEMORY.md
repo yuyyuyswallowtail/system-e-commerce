@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 01 (identity) stage 2 done.
+Last updated: 2026-11-26, prompt 01 (identity) done, all 3 stages.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -15,7 +15,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | # | Prompt | Module | Branch | Status | Last commit message |
 |---|---|---|---|---|---|
 | 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | done | feat(foundation): add config catalog, support classes, and layout wiring |
-| 01 | 01-identity.md (3 stages) | Identity | feat/01-identity | in-progress (stage 2 done) | feat(identity): add authentication, profile, and follow pages |
+| 01 | 01-identity.md (3 stages) | Identity | feat/01-identity | done | feat(identity): add admin users, roles, permissions, audit, and sessions |
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/catalog | not-started | |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/inventory | not-started | |
 | 04 | 04-cart.md (2 stages) | Cart | feat/cart | not-started | |
@@ -38,10 +38,11 @@ php artisan test
 ```
 
 ## 4. Next step
-Run prompt 01 STAGE 3 (admin users, roles, permissions, audit, sessions, menu entries) on branch feat/01-identity.
+Run prompt 02 (catalog, branch feat/02-catalog from feat/01-identity).
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 01 stage 3: admin users (list, form, status, roles, delete/restore/purge), roles, permissions, audit, sessions with online tab, menu entries with can, tests (green 175 passed, skipped 0) | feat(identity): add admin users, roles, permissions, audit, and sessions | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 01 stage 2: Fortify wiring (register via UserService, authenticateUsing rejects non-active, sha256 login limiter from config), AdminLTE auth views, /me profile and password, /users/{user:uuid} card with follow, tests (green 123 passed, skipped 0) | feat(identity): add authentication, profile, and follow pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 01 stage 1: users migration, user_follows, User model, seeders, UserService, FollowService, RoleService, SessionAdminService, events, EnsureUserActive, Gate::before, config/tables.php lists, tests (green 104 passed, skipped 0) | feat(identity): add schema, services, and seeders | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 00 final audit: added authenticated storefront layout test (user name, unread badge, logout form); no other gaps found | fix(foundation): test the authenticated storefront navigation | STAGE CHECK green | none
