@@ -47,4 +47,18 @@ return [
         'default_sort' => ['name', 'asc'],
     ],
 
+    'stock' => [
+        'searchable' => ['product_uuid'],
+        'filterable' => ['quantity_reserved'],
+        'sortable' => ['product_uuid', 'quantity_on_hand', 'quantity_reserved', 'updated_at'],
+        'default_sort' => ['updated_at', 'desc'],
+    ],
+
+    'movements' => [
+        'searchable' => ['reason', 'reference'],
+        'filterable' => ['reason'],
+        'sortable' => ['created_at', 'delta', 'reason'],
+        'default_sort' => ['created_at', 'desc'],
+    ],
+
 ];

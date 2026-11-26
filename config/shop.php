@@ -48,6 +48,7 @@ return [
     'adjust_reasons' => ['restock', 'correction', 'damage', 'return', 'order_commit'],
     'reservation_ttl_seconds' => 900,
     'low_stock_default_threshold' => 5,
+    'inventory' => ['reservation_max_items' => 50, 'commit_reason' => 'order_commit', 'statuses' => ['reserved' => 'reserved', 'committed' => 'committed', 'released' => 'released', 'expired' => 'expired']],
 
     'cart_statuses' => ['active', 'converted', 'abandoned'],
     'cart_max_quantity' => 99,
