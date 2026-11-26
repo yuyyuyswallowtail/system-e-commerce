@@ -99,3 +99,4 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - `InventoryService` also exposes `adjust(productUuid, delta, reason, actorId): StockItem` and `expire(?array $productUuids): int` (not part of the `Inventory` contract). The `order_commit` reason is rejected by manual adjust.
 - Config: `shop.inventory.reservation_max_items`, `shop.inventory.commit_reason`, `shop.inventory.statuses`. Table lists `stock` and `movements` are in `config/tables.php`.
 - `stock_reservations` has unique(order_uuid, product_uuid) and index(status, expires_at).
+- Admin pages build notes: routes `admin.stock.index` and `admin.stock.show` (productUuid must be a uuid; 404 unless the product has stock or exists in the Catalog). Adjust action requires `stock.adjust`; `order_commit` is not offered as a manual reason.

@@ -314,6 +314,7 @@ return [
         ['text' => 'Sessions', 'url' => 'admin/sessions', 'icon' => 'fas fa-desktop', 'can' => 'sessions.read'],
         ['text' => 'Products', 'url' => 'admin/products', 'icon' => 'fas fa-box', 'can' => 'products.read'],
         ['text' => 'Categories', 'url' => 'admin/categories', 'icon' => 'fas fa-tags', 'can' => 'categories.manage'],
+        ['text' => 'Stock', 'url' => 'admin/stock', 'icon' => 'fas fa-warehouse', 'can' => 'stock.read'],
     ],
 
     /*

@@ -34,4 +34,25 @@ final class StockItem extends Model
     {
         return max(0, $this->quantity_on_hand - $this->quantity_reserved);
     }
+
+    /**
+     * Uuids with stock left that is at or below the item threshold (or the configured default).
+     *
+     * @return array<int, string>
+     */
+    public static function lowStockUuids(): array
+    {
+        $default = (int) config('shop.low_stock_default_threshold');
+        $uuids = [];
+
+        foreach (self::query()->cursor() as $item) {
+            $available = $item->available();
+
+            if ($available > 0 && $available <= ($item->low_stock_threshold ?? $default)) {
+                $uuids[] = $item->product_uuid;
+            }
+        }
+
+        return $uuids;
+    }
 }
