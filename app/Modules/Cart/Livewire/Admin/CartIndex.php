@@ -35,6 +35,8 @@ class CartIndex extends Component
 
     public function sortBy(string $field): void
     {
+        $this->allow('carts.read');
+
         if (! in_array($field, (array) config('tables.carts.sortable'), true)) {
             return;
         }
