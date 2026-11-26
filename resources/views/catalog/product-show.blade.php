@@ -12,6 +12,7 @@
         <p class="text-muted">{{ $product->category?->name }}</p>
         <h4>{{ \App\Support\Money::format($product->price_amount, $product->currency) }}</h4>
         <livewire:inventory.availability-badge :product-uuid="$product->uuid" :key="'badge-'.$product->uuid" />
+        <livewire:cart.add-button :product-uuid="$product->uuid" :key="'cart-'.$product->uuid" />
         <p>SKU: {{ $product->sku }}</p>
         <p style="white-space: pre-line;">{{ $product->description }}</p>
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">Back to products</a>

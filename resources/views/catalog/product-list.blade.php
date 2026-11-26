@@ -27,6 +27,7 @@
                         <p class="card-text text-muted mb-1">{{ $product->category?->name }}</p>
                         <p class="card-text font-weight-bold">{{ \App\Support\Money::format($product->price_amount, $product->currency) }}</p>
                         <livewire:inventory.availability-badge :product-uuid="$product->uuid" :key="'badge-'.$product->uuid" />
+                        <livewire:cart.add-button :product-uuid="$product->uuid" :key="'cart-'.$product->uuid" />
                     </div>
                 </div>
             </div>
