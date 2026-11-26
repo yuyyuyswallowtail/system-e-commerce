@@ -2,6 +2,7 @@
 
 use App\Modules\Cart\Providers\CartServiceProvider;
 use App\Modules\Catalog\Providers\CatalogServiceProvider;
+use App\Modules\Comment\Providers\CommentServiceProvider;
 use App\Modules\Content\Providers\ContentServiceProvider;
 use App\Modules\History\Providers\HistoryServiceProvider;
 use App\Modules\Identity\Providers\IdentityServiceProvider;
@@ -24,4 +25,5 @@ return [
     HistoryServiceProvider::class,
     NotificationServiceProvider::class,
     ContentServiceProvider::class,
+    CommentServiceProvider::class,
 ];

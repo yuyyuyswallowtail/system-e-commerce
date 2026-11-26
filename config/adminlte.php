@@ -323,6 +323,7 @@ return [
         ['text' => 'History', 'url' => 'me/history', 'icon' => 'fas fa-clock', 'can' => null],
         ['text' => 'History admin', 'url' => 'admin/history', 'icon' => 'fas fa-stream', 'can' => 'history.read'],
         ['text' => 'Articles', 'url' => 'admin/articles', 'icon' => 'fas fa-newspaper', 'can' => 'articles.read'],
+        ['text' => 'Comments', 'url' => 'admin/comments', 'icon' => 'fas fa-comments', 'can' => 'comments.moderate'],
         ['text' => 'Notifications', 'url' => 'notifications', 'icon' => 'fas fa-bell', 'can' => null],
     ],
 

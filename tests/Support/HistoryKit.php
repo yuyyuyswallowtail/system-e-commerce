@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Support;
 
 use App\Models\User;
+use App\Modules\Comment\Events\CommentPosted;
+use App\Modules\Comment\Models\Comment;
 use App\Modules\Content\Events\ArticlePublished;
 use App\Modules\Content\Models\Article;
 use App\Modules\History\Models\HistoryEvent;
@@ -54,6 +56,18 @@ final class HistoryKit
             ]);
 
             return new ArticlePublished($article, $user->id);
+        }
+
+        if ($class === CommentPosted::class) {
+            $comment = new Comment;
+            $comment->forceFill([
+                'uuid' => (string) Str::uuid(),
+                'entity_type' => 'product',
+                'entity_uuid' => (string) Str::uuid(),
+                'user_id' => $user->id,
+            ]);
+
+            return new CommentPosted($comment, $user->id);
         }
 
         return new $class((string) Str::uuid(), $user->id);

@@ -97,6 +97,7 @@ return [
 
     'comment_entity_types' => ['article', 'product'],
     'comment_statuses' => ['visible', 'hidden'],
+    'comment_status_roles' => ['visible' => 'visible', 'hidden' => 'hidden'],
     'comment_max_length' => 1000,
     'comment_flood_limit' => 5,
     'comment_flood_decay_seconds' => 60,
