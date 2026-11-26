@@ -90,7 +90,7 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - Admin pages: GET /admin/comments (comments.moderate; hide/show, delete). `CommentStats`: `{total, visible, hidden, deleted}`.
 
 ## Dashboard
-- No tables. GET /admin/dashboard (dashboard.read) is the AdminLTE home for staff. Blocks: sales {orders, payments}, stock {stock, catalog}, content {articles, comments}. Each block is the provider array unchanged or `null` when its provider throws; failed block names are shown in a warning alert.
+- No tables. GET /admin/dashboard (dashboard.read) is the AdminLTE home for staff. Blocks (config shop.dashboard.blocks, provider names from StatsProvider::name()): sales {orders, payments}, stock {inventory, catalog}, content {content, comments}; summary = all. DashboardService::forBlock(block) returns {data, warnings}, data is null when every provider of the block failed; refresh() forgets the cache. Each block is the provider array unchanged or `null` when its provider throws; failed block names are shown in a warning alert.
 - Cache with Laravel `Cache` per provider, TTL [`stats_cache_ttl`] (0 disables), never cache failures.
 - `StatsProvider` Contract: `name(): string`, `stats(): array`; each module binds its provider with the tag `module.stats`.
 
