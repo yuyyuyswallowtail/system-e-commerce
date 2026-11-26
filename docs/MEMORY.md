@@ -23,7 +23,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/06-history-notification | done | feat(notification): add order and payment notifications |
 | 07 | 07-content.md (2 stages) | Content | feat/07-content | done | feat(content): add public and admin article pages |
 | 08 | 08-comment.md (2 stages) | Comment | feat/08-comment | done | feat(comment): add page embeds and moderation |
-| 09 | 09-dashboard.md (2 stages) | Dashboard | feat/dashboard | not-started | |
+| 09 | 09-dashboard.md (2 stages) | Dashboard | feat/09-dashboard | done | feat(dashboard): add admin dashboard page |
 | 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/finalize | not-started | |
 Prompt files `NN-<name>.md` live in `prompts/` and are git-ignored. Branches are chained: each prompt branches from the previous prompt branch; the owner merges `feat/finalize` into `main` at the end. They may be missing on a fresh clone: ask the owner.
 Run order: 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10. Build providers before callers.
@@ -39,10 +39,12 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 08 done (both stages) on branch feat/08-comment. Next: prompt 09 (dashboard), branching from feat/08-comment.
+Prompt 09 done (both stages) on branch feat/09-dashboard. Next: open the pull request and start the next prompt if any.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 09 stage 1: DashboardService (forBlock sales, stock, content, summary; per-provider try/catch with warnings and logged class only; Laravel Cache per provider with shop.stats_cache_ttl, 0 disables, failures never cached; refresh), DashboardServiceProvider using the module.stats tag, config shop.dashboard, FakeStatsProvider, tests (red 12 failed, green 17 passed, skipped 0) | feat(dashboard): add stats aggregation service and cache | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 09 stage 2: Dashboard Livewire page at GET /admin/dashboard (dashboard.read, small boxes with Money, orders by status, warning alert, refresh action, error state), StaffAwareLoginResponse (staff with dashboard.read to /admin/dashboard, others to /), menu entry, tests | feat(dashboard): add admin dashboard page | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 08 stage 2: comment::thread embedded in the product and article detail views (inside the single Livewire root; a failing CommentService renders the generic message and the host page stays 200), admin CommentIndex at /admin/comments (comments.moderate; filters status, entity_type, deleted; hide, show, delete; actions re-authorize), routes in the Comment module, Comments menu entry, tests for embeds and admin pages (guest redirect, member and non-permitted 403, moderator 200), obsolete catalog test about the missing comments slot replaced (full suite 709 passed, skipped 0) | feat(comment): add page embeds and moderation | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 08 stage 1: comments migration (entity_uuid without FK, self FK parent_id, soft delete, index on entity_type, entity_uuid, status), Comment model (uuid, activitylog whitelist), CommentService (post with target check, one reply level, length, flood limit; editOwn, deleteOwn, hide, show, deleteByModerator), CommentPolicy, CommentPosted, CommentStats (module.stats tag), CommentServiceProvider, comment::thread Livewire component with locked props and escaped bodies, config tables.comments, tests (full suite 694 passed, skipped 0) | feat(comment): add schema, comment service, and thread component | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 07 stage 1: articles migration, Article model (uuid, unique slug incl. soft-deleted, activitylog without body), ArticlePresenter (sanitized markdown), ArticleService (create, update, publish, unpublish, archive, delete, restore, uploadCover), ArticleDirectory contract and service, ContentStats, ArticlePublished, ContentServiceProvider, config shop.article and tables.articles, tests (red 32 failed, green 32 passed, skipped 0) | feat(content): add schema, article service, and article directory contract | STAGE CHECK green | none

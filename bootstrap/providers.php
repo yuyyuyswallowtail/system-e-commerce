@@ -4,6 +4,7 @@ use App\Modules\Cart\Providers\CartServiceProvider;
 use App\Modules\Catalog\Providers\CatalogServiceProvider;
 use App\Modules\Comment\Providers\CommentServiceProvider;
 use App\Modules\Content\Providers\ContentServiceProvider;
+use App\Modules\Dashboard\Providers\DashboardServiceProvider;
 use App\Modules\History\Providers\HistoryServiceProvider;
 use App\Modules\Identity\Providers\IdentityServiceProvider;
 use App\Modules\Inventory\Providers\InventoryServiceProvider;
@@ -26,4 +27,5 @@ return [
     NotificationServiceProvider::class,
     ContentServiceProvider::class,
     CommentServiceProvider::class,
+    DashboardServiceProvider::class,
 ];

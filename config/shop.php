@@ -104,6 +104,16 @@ return [
 
     'stats_cache_ttl' => 60,
 
+    'dashboard' => [
+        'cache_prefix' => 'dashboard:stats:',
+        'summary_block' => 'summary',
+        'blocks' => [
+            'sales' => ['orders', 'payments'],
+            'stock' => ['inventory', 'catalog'],
+            'content' => ['content', 'comments'],
+        ],
+    ],
+
     'pagination' => [
         'default' => 15,
         'max' => 100,
