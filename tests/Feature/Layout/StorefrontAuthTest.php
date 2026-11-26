@@ -12,7 +12,7 @@ use Tests\Support\LayoutProbeStorefront;
 
 function probeUser(int $id): User
 {
-    return (new User)->forceFill(['id' => $id, 'name' => 'Probe User', 'email' => "probe{$id}@example.test"]);
+    return (new User)->forceFill(['id' => $id, 'name' => 'Probe User', 'email' => "probe{$id}@example.test", 'status' => 'active', 'deleted_at' => null]);
 }
 
 beforeEach(function () {

@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -16,17 +20,8 @@ use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void {}
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -35,10 +30,24 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
 
-        RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+        Fortify::loginView(fn () => view('adminlte::auth.login'));
+        Fortify::registerView(fn () => view('adminlte::auth.register'));
 
-            return Limit::perMinute(5)->by($throttleKey);
+        // Deleted, suspended and banned users fail with the same generic error as a wrong password.
+        Fortify::authenticateUsing(function (Request $request): ?User {
+            $user = User::where('email', (string) $request->input(Fortify::username()))->first();
+
+            if ($user === null || ! Hash::check((string) $request->input('password'), (string) $user->password)) {
+                return null;
+            }
+
+            return $user->status === config('shop.default_user_status') ? $user : null;
+        });
+
+        RateLimiter::for('login', function (Request $request) {
+            $key = hash('sha256', Str::lower((string) $request->input(Fortify::username()))).'|'.$request->ip();
+
+            return new Limit($key, (int) config('shop.login_max_attempts'), (int) config('shop.login_decay_seconds'));
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
@@ -48,9 +57,7 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('passkeys', function (Request $request) {
             $credentialId = $request->input('credential.id');
 
-            return Limit::perMinute(10)->by(
-                ($credentialId ?: $request->session()->getId()).'|'.$request->ip()
-            );
+            return Limit::perMinute(10)->by(($credentialId ?: $request->session()->getId()).'|'.$request->ip());
         });
     }
 }
