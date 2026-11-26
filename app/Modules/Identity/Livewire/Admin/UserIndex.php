@@ -43,6 +43,10 @@ class UserIndex extends Component
 
     public function sortBy(string $field): void
     {
+        if (! in_array($field, (array) config('tables.users.sortable'), true)) {
+            return;
+        }
+
         $this->sortDirection = ($this->sortField === $field && $this->sortDirection === 'asc') ? 'desc' : 'asc';
         $this->sortField = $field;
         $this->resetPage();
@@ -50,6 +54,8 @@ class UserIndex extends Component
 
     public function render(): View
     {
+        abort_unless(auth()->user()?->can('users.read') === true, 403);
+
         $modes = (array) config('tables.users.deleted_modes');
         $mode = in_array($this->deleted, $modes, true) ? $this->deleted : 'without';
 

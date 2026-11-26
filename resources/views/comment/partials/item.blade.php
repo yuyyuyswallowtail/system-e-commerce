@@ -8,7 +8,7 @@
         <button type="button" wire:click="saveEdit" class="btn btn-sm btn-primary">Save</button>
         <button type="button" wire:click="cancelEdit" class="btn btn-sm btn-link">Cancel</button>
     @else
-        <div class="mb-1">{!! nl2br(e($comment->body)) !!}</div>
+        <div class="mb-1">@foreach (preg_split('/\R/', (string) $comment->body) as $line){{ $line }}@if (! $loop->last)<br />@endif@endforeach</div>
         <div class="small">
             @auth
                 @if (! $isReply)
