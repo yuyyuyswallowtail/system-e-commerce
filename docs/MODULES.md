@@ -123,3 +123,7 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - `OrderShow` pay and fail call `PaymentService` for the owner only; fail is refused with 403 unless `payment_simulate_failure` is true; cancel uses `OrderPolicy::cancel`.
 - `OrderDetail::changeStatus` needs `orders.manage`; `PaymentIndex::refund` needs `payments.refund` and a reason.
 - The shipping form fields come from `shop.order.shipping_rules`; domain errors map to `form.<field>` or `cart`.
+
+## Schedule build notes (prompt 05)
+- `routes/console.php` schedules `inventory:release-expired` and `payments:expire` every minute with `withoutOverlapping`.
+- An unpaid order is cancelled with reason `payment_expired` and its reservation released by `payments:expire` once the payment passes `expires_at`.
