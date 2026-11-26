@@ -97,6 +97,8 @@ return [
     'uploads' => [
         'mimes' => ['jpg', 'jpeg', 'png', 'webp'],
         'max_kb' => 2048,
+        'disk' => 'public',
+        'directory' => 'products',
     ],
 
 ];
