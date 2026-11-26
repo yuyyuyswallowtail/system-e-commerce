@@ -28,7 +28,7 @@ class ProductList extends Component
 
     public function sortBy(string $field): void
     {
-        if (! in_array($field, ['name', 'price_amount'], true)) {
+        if (! in_array($field, (array) config('shop.product_public_sortable'), true)) {
             return;
         }
 

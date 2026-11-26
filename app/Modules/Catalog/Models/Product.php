@@ -37,7 +37,7 @@ class Product extends Model
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where('status', 'active');
+        return $query->where('status', (string) config('shop.product_public_status'));
     }
 
     /**

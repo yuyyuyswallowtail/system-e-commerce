@@ -21,7 +21,7 @@ class ProductShow extends Component
 
     public function mount(Product $product): void
     {
-        $visible = $product->status === 'active' && ! $product->trashed();
+        $visible = $product->status === config('shop.product_public_status') && ! $product->trashed();
 
         if (! $visible) {
             abort_unless(Auth::user()?->can('products.read') === true, 404);

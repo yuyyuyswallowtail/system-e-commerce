@@ -24,3 +24,11 @@ it('keeps upload settings in config', function () {
         ->and(config('shop.uploads.mimes'))->toBeArray()
         ->and(config('shop.uploads.max_kb'))->toBeInt();
 });
+
+it('keeps the catalog status roles inside the configured status list', function () {
+    expect(config('shop.product_statuses'))
+        ->toContain(config('shop.product_default_status'))
+        ->toContain(config('shop.product_public_status'))
+        ->toContain(config('shop.product_inactive_status'))
+        ->and(config('tables.products.sortable'))->toContain(...config('shop.product_public_sortable'));
+});

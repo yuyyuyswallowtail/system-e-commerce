@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 02 (catalog) done, all 3 stages.
+Last updated: 2026-11-26, prompt 02 (catalog) done, all 3 stages, final audit applied.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -42,6 +42,7 @@ Run prompt 03 (inventory, branch feat/03-inventory from feat/02-catalog).
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 02 final audit: moved hardcoded product status roles and public sortable fields into config/shop.php, added config test | fix(catalog): read status roles from config | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 02 stage 3: public ProductList (/ and /products, active only, search, category filter, name/price sort, pagination) and ProductShow (/products/{product:uuid}, 404 for draft/inactive/deleted, staff with products.read preview) on storefront layout, welcome route moved to Catalog, tests (green 283 passed, skipped 0) | feat(catalog): add public product pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 02 stage 2: admin ProductIndex, ProductForm (create, update, status, image upload, delete, restore), CategoryIndex, catalog routes with can middleware, AdminLTE menu entries with can, views, tests (green 95 catalog tests passed, skipped 0) | feat(catalog): add admin products and categories | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 02 stage 1: catalog migrations, Product and Category models (uuid, slug, activitylog), ProductService, CategoryService, ProductCatalog contract and service, CatalogStats, ProductChanged, CatalogServiceProvider, factories, config lists, tests (green 222 passed, skipped 0) | feat(catalog): add schema, services, and product catalog contract | STAGE CHECK green | none

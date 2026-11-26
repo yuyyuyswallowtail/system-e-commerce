@@ -30,7 +30,7 @@ final class ProductService
     {
         $input = Arr::only($data, ['sku', 'name', 'description', 'price_amount', 'currency', 'status', 'category_uuid']);
         $input['currency'] ??= (string) config('shop.default_currency');
-        $input['status'] ??= (string) Arr::first((array) config('shop.product_statuses'));
+        $input['status'] ??= (string) config('shop.product_default_status');
 
         $valid = $this->validate($input, [
             'sku' => ['required', 'string', 'max:64', Rule::unique('products', 'sku')],

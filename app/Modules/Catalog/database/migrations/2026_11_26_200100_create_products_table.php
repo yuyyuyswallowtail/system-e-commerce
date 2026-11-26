@@ -24,7 +24,7 @@ return new class extends Migration
             $table->bigInteger('price_amount');
             $table->char('currency', 3)->default((string) config('shop.default_currency'));
             $table->foreignId('category_id')->nullable()->constrained('product_categories')->restrictOnDelete();
-            $table->string('status', 20)->default('draft')->index();
+            $table->string('status', 20)->default((string) config('shop.product_default_status'))->index();
             $table->string('image_path')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();

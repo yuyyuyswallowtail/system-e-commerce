@@ -47,7 +47,7 @@ class ProductForm extends Component
     public function mount(mixed $product = null): void
     {
         $this->currency = (string) config('shop.default_currency');
-        $this->status = (string) config('shop.product_statuses.0');
+        $this->status = (string) config('shop.product_default_status');
 
         if (is_string($product)) {
             $product = Product::withTrashed()->where('uuid', $product)->firstOrFail();
