@@ -96,4 +96,12 @@ return [
         'default_sort' => ['created_at', 'desc'],
     ],
 
+    'comments' => [
+        'searchable' => ['body'],
+        'filterable' => ['status', 'entity_type'],
+        'deleted_modes' => ['without', 'with', 'only'],
+        'sortable' => ['created_at', 'status', 'entity_type'],
+        'default_sort' => ['created_at', 'desc'],
+    ],
+
 ];

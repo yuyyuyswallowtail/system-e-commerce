@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 07 (content) stage 2 done.
+Last updated: 2026-11-26, prompt 08 (comment) stage 1 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -22,7 +22,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | done | feat(order): add scheduled expiry and checkout journey test |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/06-history-notification | done | feat(notification): add order and payment notifications |
 | 07 | 07-content.md (2 stages) | Content | feat/07-content | done | feat(content): add public and admin article pages |
-| 08 | 08-comment.md (2 stages) | Comment | feat/comment | not-started | |
+| 08 | 08-comment.md (2 stages) | Comment | feat/08-comment | in-progress | feat(comment): add schema, comment service, and thread component |
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/dashboard | not-started | |
 | 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/finalize | not-started | |
 Prompt files `NN-<name>.md` live in `prompts/` and are git-ignored. Branches are chained: each prompt branches from the previous prompt branch; the owner merges `feat/finalize` into `main` at the end. They may be missing on a fresh clone: ask the owner.
@@ -39,10 +39,11 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 07 done (both stages) on branch feat/07-content. Next: the next prompt in the series.
+Prompt 08 stage 1 done on branch feat/08-comment. Next: prompt 08 stage 2 (embed comment::thread in the product and article detail pages, admin moderation page at /admin/comments, menu entry).
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 08 stage 1: comments migration (entity_uuid without FK, self FK parent_id, soft delete, index on entity_type, entity_uuid, status), Comment model (uuid, activitylog whitelist), CommentService (post with target check, one reply level, length, flood limit; editOwn, deleteOwn, hide, show, deleteByModerator), CommentPolicy, CommentPosted, CommentStats (module.stats tag), CommentServiceProvider, comment::thread Livewire component with locked props and escaped bodies, config tables.comments, tests (full suite 694 passed, skipped 0) | feat(comment): add schema, comment service, and thread component | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 07 stage 1: articles migration, Article model (uuid, unique slug incl. soft-deleted, activitylog without body), ArticlePresenter (sanitized markdown), ArticleService (create, update, publish, unpublish, archive, delete, restore, uploadCover), ArticleDirectory contract and service, ContentStats, ArticlePublished, ContentServiceProvider, config shop.article and tables.articles, tests (red 32 failed, green 32 passed, skipped 0) | feat(content): add schema, article service, and article directory contract | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 07 stage 2: public pages /articles and /articles/{slug} (published only, staff preview), admin list and form with publish, unpublish, archive, delete, restore, cover upload and sanitized markdown preview, menu entry, tests | feat(content): add public and admin article pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 06 stage 2: notifications table migration (Laravel database notifications), six notification classes on a shared base (type from shop.notification_types, title, body, data with order uuid, amount, currency, event_uuid), NotifyUser listener (idempotent by event_uuid, missing user skipped and logged, failures logged), NotificationServiceProvider queueing the listener for existing classes only, config/notification.php (events, tries, poll_seconds default 0), NotificationList (/notifications, unread filter, mark read, mark all read, delete, other ids 404) and UnreadBadge Livewire component in the storefront navbar, menu entry, layout probe test made safe for the real table (full suite 562 passed, skipped 0) | feat(notification): add order and payment notifications | STAGE CHECK green | none
