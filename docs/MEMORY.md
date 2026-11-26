@@ -19,7 +19,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/02-catalog | done | feat(catalog): add public product pages |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/03-inventory | done | feat(inventory): show availability on public product pages |
 | 04 | 04-cart.md (2 stages) | Cart | feat/04-cart | done | feat(cart): add cart pages and admin cart list |
-| 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | in-progress | feat(order): add schema, checkout transaction, and payment handler |
+| 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | in-progress | feat(order): add checkout, order, and payment pages |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/history-notification | not-started | |
 | 07 | 07-content.md (2 stages) | Content | feat/content | not-started | |
 | 08 | 08-comment.md (2 stages) | Comment | feat/comment | not-started | |
@@ -39,10 +39,11 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 05 stage 3: member pages (checkout, orders, order detail with pay and cancel) and admin pages (orders, order detail, payments with refund), menu entries, the checkout route name, Livewire and page tests. Then stage 4: schedule in routes/console.php and the journey test.
+Prompt 05 stage 4: schedule inventory:release-expired and payments:expire every minute with withoutOverlapping in routes/console.php, sequential concurrency-style tests, the register to paid journey test, doc updates, then mark prompt 05 done.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 05 stage 3: member pages CheckoutPage (form object, locked idempotency key, domain errors mapped to fields or flash), OrderList (status filter), OrderShow (pay, fail only with the config flag, cancel while awaiting_payment), admin OrderIndex (search, status, date range), OrderDetail (status change needs orders.manage), PaymentIndex (status filter, refund needs payments.refund), routes with can middleware, menu entries, checkout route name, views, tests (green 499 passed, skipped 0) | feat(order): add checkout, order, and payment pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 05 stage 2: orders and order_items migrations, Order and OrderItem models, CheckoutService (replay, cart, catalog re-price, open-orders cap, one transaction with reserve and payment create), OrderPaymentHandlerImpl bound to the Payment contract, OrderService (cancelByOwner, changeStatus, filtered lists), OrderPolicy, PaymentPolicy, four order events, OrderStats, OrderServiceProvider, config lists, tests (green 464 passed, skipped 0) | feat(order): add schema, checkout transaction, and payment handler | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 05 stage 1: payments and payment_events migrations, Payment and PaymentEvent models (uuid, activitylog), Payments and OrderPaymentHandler contracts, PaymentDto, PaymentService (create, byOrder, cancelByOrder, pay, fail, expirePending, refund), six payment events, PaymentStats, payments:expire command, PaymentServiceProvider, config shop.payment and tables.payments, tests (red 31 failed, green 31 passed, skipped 0) | feat(payment): add schema, payment service, and contracts | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 04 stage 2: /cart page (CartPage), cart.add-button on public product list and detail, admin carts list (CartIndex, carts.read), menu entries, tests (red 23 failed, green 59 cart tests passed, skipped 0) | feat(cart): add cart pages and admin cart list | STAGE CHECK green | none

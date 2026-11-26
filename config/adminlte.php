@@ -317,6 +317,9 @@ return [
         ['text' => 'Stock', 'url' => 'admin/stock', 'icon' => 'fas fa-warehouse', 'can' => 'stock.read'],
         ['text' => 'Cart', 'url' => 'cart', 'icon' => 'fas fa-shopping-cart', 'can' => null],
         ['text' => 'Carts', 'url' => 'admin/carts', 'icon' => 'fas fa-shopping-basket', 'can' => 'carts.read'],
+        ['text' => 'My orders', 'url' => 'orders', 'icon' => 'fas fa-receipt', 'can' => null],
+        ['text' => 'Orders', 'url' => 'admin/orders', 'icon' => 'fas fa-clipboard-list', 'can' => 'orders.read'],
+        ['text' => 'Payments', 'url' => 'admin/payments', 'icon' => 'fas fa-credit-card', 'can' => 'payments.read'],
     ],
 
     /*

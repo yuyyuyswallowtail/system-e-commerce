@@ -26,6 +26,7 @@ final class PaymentServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         Gate::policy(Payment::class, PaymentPolicy::class);
 
         if ($this->app->runningInConsole()) {

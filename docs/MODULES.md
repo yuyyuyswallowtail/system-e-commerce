@@ -117,3 +117,9 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - `pay` and `fail` throw NotFoundException for a non-owner, ConflictException when not pending; an expired payment is marked expired, the handler is called with expired, the transaction commits, then ConflictException is thrown. `fail` needs `payment_simulate_failure`. `refund` needs `payments.refund` (AuthorizationException), a reason up to `shop.payment.refund_reason_max`, and a paid payment.
 - `expirePending` handles each payment in its own transaction; a payment whose handler call throws stays pending and is reported.
 - Config: `shop.payment.{reference_prefix, reference_bytes, refund_reason_max, statuses, results, events}` and `tables.payments`. DTO `PaymentDto` lives in `App\Modules\Payment\DTO`.
+
+## Checkout pages build notes (prompt 05)
+- Routes: `checkout`, `orders.index`, `orders.show` (login only, Order module), `admin.orders.index`, `admin.orders.show` (can:orders.read), `admin.payments.index` (can:payments.read, Payment module).
+- `OrderShow` pay and fail call `PaymentService` for the owner only; fail is refused with 403 unless `payment_simulate_failure` is true; cancel uses `OrderPolicy::cancel`.
+- `OrderDetail::changeStatus` needs `orders.manage`; `PaymentIndex::refund` needs `payments.refund` and a reason.
+- The shipping form fields come from `shop.order.shipping_rules`; domain errors map to `form.<field>` or `cart`.
