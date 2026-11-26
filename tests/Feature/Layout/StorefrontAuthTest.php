@@ -22,15 +22,18 @@ beforeEach(function () {
     });
     app('router')->getRoutes()->refreshNameLookups();
 
-    Schema::dropIfExists('notifications');
-    Schema::create('notifications', function (Blueprint $table) {
-        $table->uuid('id')->primary();
-        $table->string('type');
-        $table->morphs('notifiable');
-        $table->text('data');
-        $table->timestamp('read_at')->nullable();
-        $table->timestamps();
-    });
+    if (! Schema::hasTable('notifications')) {
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    DB::table('notifications')->where('type', 'probe')->delete();
 
     $row = fn (int $userId, ?string $readAt) => [
         'id' => (string) Str::uuid(),
@@ -50,7 +53,7 @@ beforeEach(function () {
 });
 
 afterEach(function () {
-    Schema::dropIfExists('notifications');
+    DB::table('notifications')->where('type', 'probe')->delete();
 });
 
 it('shows the user name, the unread count and the logout form to a signed-in user', function () {

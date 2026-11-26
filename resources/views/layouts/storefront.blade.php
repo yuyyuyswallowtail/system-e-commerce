@@ -38,15 +38,7 @@
 
                         @auth
                             @if (Route::has('notifications.index'))
-                                @php($unread = auth()->user()?->unreadNotifications()->count() ?? 0)
-                                <li class="nav-item">
-                                    <a href="{{ route('notifications.index') }}" class="nav-link" aria-label="Notifications">
-                                        <i class="far fa-bell"></i>
-                                        @if ($unread > 0)
-                                            <span class="badge badge-warning navbar-badge" data-notification-badge>{{ $unread }}</span>
-                                        @endif
-                                    </a>
-                                </li>
+                                <livewire:notification.unread-badge />
                             @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>

@@ -127,3 +127,15 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 ## Schedule build notes (prompt 05)
 - `routes/console.php` schedules `inventory:release-expired` and `payments:expire` every minute with `withoutOverlapping`.
 - An unpaid order is cancelled with reason `payment_expired` and its reservation released by `payments:expire` once the payment passes `expires_at`.
+
+## History build notes (prompt 06)
+- `config/history.php` keys: `events` (class => [subject_type, action]), `subject_types`, `actions`, `tries`, `secret_keys` (detail keys containing a fragment are dropped).
+- `HistoryServiceProvider::registerListeners()` loops `events`, skips classes that do not exist, and queues `RecordHistory` through a `CallQueuedListener` job (tries from config, after commit). A payload or queue failure is logged and never reaches the dispatcher.
+- Routes: `history.mine` GET /me/history (auth), `admin.history` GET /admin/history (history.read). Both lists use `config/tables.php` [`history`].
+
+## Notification build notes (prompt 06)
+- `config/notification.php` keys: `events` (event class => notification class), `tries`, `poll_seconds` (unread badge polling, 0 = off).
+- `NotifyUser` finds the user by the event `userId`, skips and logs a missing user, and stores `event_uuid` in the notification data so a retry never duplicates. `NotificationServiceProvider` queues it only for classes that exist and logs queue failures.
+- Notification data shape: `type`, `title`, `body`, `data` {order_uuid, amount, currency, event_uuid}.
+- Routes: `notifications.index` GET /notifications (auth). Livewire `notification.unread-badge` is embedded in the storefront navbar.
+- The unread badge is the Livewire component in the storefront navbar. The AdminLTE staff layout shows a Notifications menu entry but no badge (the AdminLTE 3 navbar has no slot for a Livewire component without changing the layout package config).
