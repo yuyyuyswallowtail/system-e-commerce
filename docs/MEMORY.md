@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 00 stage 1 (skeleton and packages) done.
+Last updated: 2026-11-26, prompt 00 (foundation) done, both stages.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -14,7 +14,7 @@ Last updated: 2026-11-26, prompt 00 stage 1 (skeleton and packages) done.
 Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | # | Prompt | Module | Branch | Status | Last commit message |
 |---|---|---|---|---|---|
-| 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | in-progress (stage 1 done) | chore: install laravel 13 with livewire, adminlte, fortify and spatie packages |
+| 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | done | feat(foundation): add config catalog, support classes, and layout wiring |
 | 01 | 01-identity.md (3 stages) | Identity | feat/identity | not-started | |
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/catalog | not-started | |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/inventory | not-started | |
@@ -38,10 +38,11 @@ php artisan test
 ```
 
 ## 4. Next step
-Prompt 00 stage 2: config catalog, support classes, layout wiring and tests (branch feat/00-foundation).
+Run prompt 01 (identity, branch feat/identity created from feat/00-foundation). Foundation provides config/shop.php, permissions.php, tables.php, history.php, App\Support, layouts::app and layouts::storefront.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 00 stage 2: config catalog, support classes (Money, Sql, exceptions, DomainEvent, StatsProvider, HasTableQuery), AppServiceProvider strict mode, AdminLTE config, layouts::app and layouts::storefront, tests (red 32 failed 10 passed, green 42 passed, skipped 0) | feat(foundation): add config catalog, support classes, and layout wiring | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 00 stage 1: Laravel 13 skeleton, packages (versions in section 8), .env keys, .gitignore, scripts/db-create-test.php, phpunit.xml, Pest smoke test | chore: install laravel 13 with livewire, adminlte, fortify and spatie packages | STAGE CHECK green | none
 - docs session | wrote AGENTS.md, docs/ and prompts 00 to 10 for the monolith | none yet | prompts ready, nothing built | none
 
