@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Cart\Providers\CartServiceProvider;
 use App\Modules\Catalog\Providers\CatalogServiceProvider;
 use App\Modules\Identity\Providers\IdentityServiceProvider;
 use App\Modules\Inventory\Providers\InventoryServiceProvider;
@@ -12,4 +13,5 @@ return [
     IdentityServiceProvider::class,
     CatalogServiceProvider::class,
     InventoryServiceProvider::class,
+    CartServiceProvider::class,
 ];

@@ -61,4 +61,11 @@ return [
         'default_sort' => ['created_at', 'desc'],
     ],
 
+    'carts' => [
+        'searchable' => ['users.name', 'users.email'],
+        'filterable' => ['status'],
+        'sortable' => ['status', 'created_at', 'updated_at'],
+        'default_sort' => ['updated_at', 'desc'],
+    ],
+
 ];

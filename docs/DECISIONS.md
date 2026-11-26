@@ -30,3 +30,7 @@ Status: `accepted` = fixed by the owner. `proposed` = default chosen when writin
 
 ## How to add a decision
 Append a row with the next ID, status `proposed` or `open`, one sentence, and the modules it affects. If it changes a contract, update `docs/MODULES.md` in the same commit.
+
+## Cart pages (prompt 04, stage 2)
+- The add button is registered as `cart.add-button` instead of the namespaced `cart::add-button`, to follow the existing `inventory.availability-badge` convention in this code base.
+- New config key `shop.cart_available_product_status` (value `active`) names the catalog status that lets a cart line be checked out, so views and components never hardcode it.

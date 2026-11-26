@@ -7,4 +7,4 @@ use Tests\TestCase;
 
 pest()->extend(TestCase::class)->in('Feature', 'Unit');
 
-pest()->use(RefreshDatabase::class)->in('Feature/Identity', 'Unit/Identity', 'Feature/Catalog', 'Unit/Catalog', 'Feature/Inventory', 'Unit/Inventory');
+pest()->use(RefreshDatabase::class)->in('Feature/Identity', 'Unit/Identity', 'Feature/Catalog', 'Unit/Catalog', 'Feature/Inventory', 'Unit/Inventory', 'Feature/Cart', 'Unit/Cart');

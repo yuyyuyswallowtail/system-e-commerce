@@ -101,3 +101,12 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - `stock_reservations` has unique(order_uuid, product_uuid) and index(status, expires_at).
 - Admin pages build notes: routes `admin.stock.index` and `admin.stock.show` (productUuid must be a uuid; 404 unless the product has stock or exists in the Catalog). Adjust action requires `stock.adjust`; `order_commit` is not offered as a manual reason.
 - Catalog enrichment: the Livewire component `inventory.availability-badge` (prop `productUuid`, locked) is embedded in `catalog/product-list` and `catalog/product-show` views. It calls `Inventory::availability` and renders nothing when the call throws.
+
+## Cart build notes (prompt 04)
+- `CartService` implements `CartReader` and also exposes `getOrCreateActive(userId): Cart`, `add(userId, productUuid, quantity): CartItem`, `setQuantity(userId, productUuid, quantity): CartItem`, `remove(userId, productUuid): void` (not part of the contract).
+- Failures are `DomainValidationException` with fields `product` (unknown, deleted or not active), `quantity` (range or stock; stock failures also carry `available` as a string) and `items` (distinct item limit). `setQuantity` on a missing line throws `NotFoundException`.
+- Config: `shop.cart.statuses` maps the status roles active, converted, abandoned; `config/tables.php` has the `carts` list (searchable users.name and users.email, filterable status).
+- `CartCleared` uses subject type `cart` and the cart uuid; it is dispatched only when an active cart existed.
+- Pages: `/cart` (CartPage, auth) and `/admin/carts` (CartIndex, `carts.read`). The add button is the Livewire component alias `cart.add-button` (registered in CartServiceProvider, same convention as `inventory.availability-badge`); it is rendered on the public product list and detail views and redirects guests to login.
+- The checkout link on `/cart` is rendered only when the named route `checkout` exists and no line is unavailable. A line is unavailable when the catalog lookup fails, the product is deleted, or its status differs from `shop.cart_available_product_status`.
+- The admin list joins a derived `users` subquery limited to id, name and email, so the whitelisted columns in `config/tables.php` stay unambiguous; totals are computed from the eager loaded items.

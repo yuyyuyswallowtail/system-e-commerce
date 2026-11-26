@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 03 (inventory) done, all 3 stages.
+Last updated: 2026-11-26, prompt 04 (cart) stage 2 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -18,7 +18,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 01 | 01-identity.md (3 stages) | Identity | feat/01-identity | done | feat(identity): add admin users, roles, permissions, audit, and sessions |
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/02-catalog | done | feat(catalog): add public product pages |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/03-inventory | done | feat(inventory): show availability on public product pages |
-| 04 | 04-cart.md (2 stages) | Cart | feat/cart | not-started | |
+| 04 | 04-cart.md (2 stages) | Cart | feat/04-cart | done | feat(cart): add cart pages and admin cart list |
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/checkout | not-started | |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/history-notification | not-started | |
 | 07 | 07-content.md (2 stages) | Content | feat/content | not-started | |
@@ -38,10 +38,12 @@ php artisan test
 ```
 
 ## 4. Next step
-Run prompt 04 (cart, branch feat/04-cart from feat/03-inventory).
+Run prompt 05 stage 1 (checkout: Payment and Order) from the branch named in the prompt 05 row.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 04 stage 2: /cart page (CartPage), cart.add-button on public product list and detail, admin carts list (CartIndex, carts.read), menu entries, tests (red 23 failed, green 59 cart tests passed, skipped 0) | feat(cart): add cart pages and admin cart list | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 04 stage 1: carts and cart_items migrations (active_key unique), Cart and CartItem models, CartService (getOrCreateActive, add, setQuantity, remove, clear, activeItems), CartReader contract with CartLine DTO, CartCleared event, CartServiceProvider, config lists, tests (red 34 failed 2 passed, green 36 passed, skipped 0) | feat(cart): add schema, cart service, and cart reader contract | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 03 stage 3: Livewire child component inventory.availability-badge (Inventory contract only, any exception renders no badge) embedded in the Catalog public list and detail views, tests (present, low, out, contract throws) | feat(inventory): show availability on public product pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 03 stage 2: admin StockIndex (list, low-stock filter, product names via ProductCatalog::lookup with uuid fallback) and StockShow (movements, adjust form gated by stock.adjust), routes with can middleware, menu entry, views, tests (green 328 passed, skipped 0) | feat(inventory): add admin stock pages | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 03 stage 1: stock_items, stock_reservations, stock_movements migrations, models, Inventory contract, InventoryService (reserve, commit, release, adjust, expire), InsufficientStockException, four events, inventory:release-expired command, InventoryStats, InventoryServiceProvider, config lists, tests (green, skipped 0) | feat(inventory): add schema, reservation service, and inventory contract | STAGE CHECK green | none
