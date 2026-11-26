@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: docs set and prompts 00 to 10 written. Nothing built yet.
+Last updated: 2026-11-26, prompt 00 (foundation) done, both stages.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -14,7 +14,7 @@ Last updated: docs set and prompts 00 to 10 written. Nothing built yet.
 Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | # | Prompt | Module | Branch | Status | Last commit message |
 |---|---|---|---|---|---|
-| 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/foundation | not-started | |
+| 00 | 00-foundation.md (2 stages) | app skeleton, packages, layout, support | feat/00-foundation | done | feat(foundation): add config catalog, support classes, and layout wiring |
 | 01 | 01-identity.md (3 stages) | Identity | feat/identity | not-started | |
 | 02 | 02-catalog.md (3 stages) | Catalog | feat/catalog | not-started | |
 | 03 | 03-inventory.md (3 stages) | Inventory | feat/inventory | not-started | |
@@ -38,10 +38,13 @@ php artisan test
 ```
 
 ## 4. Next step
-Run prompt 00 (`feat/foundation`). One prompt per session; after each stage update the status table.
+Run prompt 01 (identity, branch feat/identity created from feat/00-foundation). Foundation provides config/shop.php, permissions.php, tables.php, history.php, App\Support, layouts::app and layouts::storefront.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 00 final audit: added authenticated storefront layout test (user name, unread badge, logout form); no other gaps found | fix(foundation): test the authenticated storefront navigation | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 00 stage 2: config catalog, support classes (Money, Sql, exceptions, DomainEvent, StatsProvider, HasTableQuery), AppServiceProvider strict mode, AdminLTE config, layouts::app and layouts::storefront, tests (red 32 failed 10 passed, green 42 passed, skipped 0) | feat(foundation): add config catalog, support classes, and layout wiring | STAGE CHECK green | none
+- 2026-11-26 | claude | prompt 00 stage 1: Laravel 13 skeleton, packages (versions in section 8), .env keys, .gitignore, scripts/db-create-test.php, phpunit.xml, Pest smoke test | chore: install laravel 13 with livewire, adminlte, fortify and spatie packages | STAGE CHECK green | none
 - docs session | wrote AGENTS.md, docs/ and prompts 00 to 10 for the monolith | none yet | prompts ready, nothing built | none
 
 ## 6. Known pitfalls (carried over from the microservice build, do not repeat)
@@ -54,3 +57,21 @@ Format: `date | account/model | what was done | commits | result | blockers`
 
 ## 7. Open blockers
 None recorded.
+
+## 8. Installed versions (prompt 00, 2026-11-26)
+- PHP 8.5.13, Composer version 2.11.3
+- jeroennoten/laravel-adminlte 3.16.0
+- laravel/fortify 1.44.0
+- laravel/framework 13.44.1
+- laravel/pail 1.3.0
+- laravel/pint 1.32.3
+- laravel/tinker 3.2.0
+- livewire/livewire 4.4.10
+- pestphp/pest 4.7.8
+- pestphp/pest-plugin-laravel 4.1.0
+- spatie/laravel-activitylog 5.1.5
+- spatie/laravel-permission 8.5.0
+- Difference from docs/STACK.md section 3: an unpinned composer require pulled jeroennoten/laravel-adminlte 4.x (AdminLTE 4); it was re-pinned to ^3.15 and resolved to 3.16.0.
+- adminlte:install --force (basic) published assets and config; the published lang/vendor/adminlte folder was removed because lang/ is outside the allowed paths (the package ships its own translations).
+- fortify:install also published the two-factor and passkeys migrations (database/migrations); they are not run yet.
+- Spatie permission and activitylog migrations are published but not run yet; prompt 01 owns the migrate step.

@@ -23,6 +23,10 @@ Status: `accepted` = fixed by the owner. `proposed` = default chosen when writin
 | D-M017 | proposed | Comments thread is a reusable Livewire component embedded in product and article pages | comment, catalog, content |
 | D-M018 | proposed | Public pages use a storefront layout built on the AdminLTE package assets; staff and member pages use the AdminLTE page layout | all |
 | D-M019 | accepted | Prompt branches are chained (feat/foundation, feat/identity, ... feat/finalize), each created from the previous one; the owner merges feat/finalize into main with --ff-only after prompt 10. Prompt files live in prompts/ and are git-ignored | all |
+| D-M020 | proposed | AdminLTE 3 is pinned to ^3.16 (an unpinned require pulls AdminLTE 4). Staff and member pages use the component layout `layouts::app` (set as `component_layout` in config/livewire.php, extends `adminlte::page`). Public pages use `layouts::storefront` (extends `adminlte::master`, top navigation, login/register or user dropdown, notification badge for authenticated users) chosen with `#[Layout("layouts::storefront")]` | all |
+| D-M021 | proposed | `config/shop.php` has a `currencies` map (currency code => minor-unit decimals) read by App\Support\Money; it is not listed in docs/MODULES.md | catalog, cart, order, payment |
+| D-M022 | proposed | Order transitions in config: awaiting_payment to paid or cancelled, paid to processing or cancelled, processing to shipped, shipped to completed; manual ones are only paid to processing, processing to shipped, shipped to completed | order, payment |
+| D-M023 | proposed | `config/permissions.php` roles use `*` for all permissions and `all_except` for all but the listed codes; member is an empty list | identity |
 
 ## How to add a decision
 Append a row with the next ID, status `proposed` or `open`, one sentence, and the modules it affects. If it changes a contract, update `docs/MODULES.md` in the same commit.
