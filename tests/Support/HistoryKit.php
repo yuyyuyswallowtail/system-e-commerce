@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Support;
 
 use App\Models\User;
+use App\Modules\Content\Events\ArticlePublished;
+use App\Modules\Content\Models\Article;
 use App\Modules\History\Models\HistoryEvent;
 use App\Modules\Identity\Events\UserRegistered;
 use App\Modules\Identity\Events\UserStatusChanged;
@@ -40,6 +42,18 @@ final class HistoryKit
 
         if ($class === UserStatusChanged::class) {
             return new UserStatusChanged($user, 'active', 'suspended', $user->id);
+        }
+
+        if ($class === ArticlePublished::class) {
+            $article = new Article;
+            $article->forceFill([
+                'uuid' => (string) Str::uuid(),
+                'title' => 'History article',
+                'slug' => 'history-article-'.Str::lower(Str::random(6)),
+                'author_id' => $user->id,
+            ]);
+
+            return new ArticlePublished($article, $user->id);
         }
 
         return new $class((string) Str::uuid(), $user->id);

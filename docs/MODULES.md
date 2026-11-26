@@ -139,3 +139,9 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - Notification data shape: `type`, `title`, `body`, `data` {order_uuid, amount, currency, event_uuid}.
 - Routes: `notifications.index` GET /notifications (auth). Livewire `notification.unread-badge` is embedded in the storefront navbar.
 - The unread badge is the Livewire component in the storefront navbar. The AdminLTE staff layout shows a Notifications menu entry but no badge (the AdminLTE 3 navbar has no slot for a Livewire component without changing the layout package config).
+
+## Content build notes (prompt 07)
+- Config: `shop.article.{statuses, cover_directory, title_max, summary_max, body_max}` and `tables.articles`. Covers use `shop.uploads` (disk, mimes, max_kb) with the directory from `shop.article.cover_directory`.
+- `ArticleService` (class) has create, update (text only), publish, unpublish (back to draft, clears published_at), archive (published only), delete, restore and uploadCover. publish, unpublish and archive throw AuthorizationException without `articles.publish`; invalid state changes throw ConflictException. `ArticlePublished` carries the author as `userId`.
+- `ArticleDirectoryService` implements `ArticleDirectory` (only published and not deleted are true, cap `shop.lookup_max_uuids`). `ContentStats` is tagged `module.stats`.
+- `ArticlePresenter::html()` is the only place that outputs unescaped HTML (Markdown, html_input strip, allow_unsafe_links false); `Article::bodyHtml()` uses it.

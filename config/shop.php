@@ -87,6 +87,13 @@ return [
     ],
 
     'article_statuses' => ['draft', 'published', 'archived'],
+    'article' => [
+        'statuses' => ['draft' => 'draft', 'published' => 'published', 'archived' => 'archived'],
+        'cover_directory' => 'articles',
+        'title_max' => 255,
+        'summary_max' => 500,
+        'body_max' => 50000,
+    ],
 
     'comment_entity_types' => ['article', 'product'],
     'comment_statuses' => ['visible', 'hidden'],

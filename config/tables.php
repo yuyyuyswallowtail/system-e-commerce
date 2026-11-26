@@ -88,4 +88,12 @@ return [
         'default_sort' => ['occurred_at', 'desc'],
     ],
 
+    'articles' => [
+        'searchable' => ['title', 'summary'],
+        'filterable' => ['status'],
+        'deleted_modes' => ['without', 'with', 'only'],
+        'sortable' => ['title', 'status', 'published_at', 'created_at', 'updated_at'],
+        'default_sort' => ['created_at', 'desc'],
+    ],
+
 ];
