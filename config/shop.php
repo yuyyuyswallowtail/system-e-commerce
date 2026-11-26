@@ -53,6 +53,7 @@ return [
     'cart_statuses' => ['active', 'converted', 'abandoned'],
     'cart_max_quantity' => 99,
     'cart_max_items' => 50,
+    'cart' => ['statuses' => ['active' => 'active', 'converted' => 'converted', 'abandoned' => 'abandoned']],
 
     'payment_statuses' => ['pending', 'paid', 'failed', 'expired', 'cancelled', 'refunded'],
     'payment_provider' => 'simulated',
