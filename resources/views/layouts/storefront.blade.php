@@ -37,8 +37,8 @@
                         @endguest
 
                         @auth
-                            @php($unread = auth()->user()?->unreadNotifications()->count() ?? 0)
                             @if (Route::has('notifications.index'))
+                                @php($unread = auth()->user()?->unreadNotifications()->count() ?? 0)
                                 <li class="nav-item">
                                     <a href="{{ route('notifications.index') }}" class="nav-link" aria-label="Notifications">
                                         <i class="far fa-bell"></i>
