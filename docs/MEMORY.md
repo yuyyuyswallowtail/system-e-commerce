@@ -24,7 +24,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 07 | 07-content.md (2 stages) | Content | feat/07-content | done | feat(content): add public and admin article pages |
 | 08 | 08-comment.md (2 stages) | Comment | feat/08-comment | done | feat(comment): add page embeds and moderation |
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/09-dashboard | done | feat(dashboard): add admin dashboard page |
-| 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/finalize | not-started | |
+| 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/10-finalize | in-progress | test: add journey tests and authorization matrix |
 Prompt files `NN-<name>.md` live in `prompts/` and are git-ignored. Branches are chained: each prompt branches from the previous prompt branch; the owner merges `feat/finalize` into `main` at the end. They may be missing on a fresh clone: ask the owner.
 Run order: 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10. Build providers before callers.
 
@@ -39,10 +39,11 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 09 done (both stages) on branch feat/09-dashboard. Next: open the pull request and start the next prompt if any.
+Prompt 10 stage 1 done on branch feat/10-finalize. Next: prompt 10 stage 2 (hardening review with fixes, README.md rewrite, sync docs/MODULES.md and docs/MEMORY.md, mark all prompts done).
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 10 stage 1: journey tests (customer, admin, content, failure journeys), authorization matrix tests (auth and can middleware on every route, no duplicate route names, admin GET routes as guest, member and super_admin), DemoDataSeeder (idempotent, leaves users alone) and DatabaseSeeder wiring, Pest RefreshDatabase for Journeys (full suite 753 passed, skipped 0) | test: add journey tests and authorization matrix | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 09 stage 1: DashboardService (forBlock sales, stock, content, summary; per-provider try/catch with warnings and logged class only; Laravel Cache per provider with shop.stats_cache_ttl, 0 disables, failures never cached; refresh), DashboardServiceProvider using the module.stats tag, config shop.dashboard, FakeStatsProvider, tests (red 12 failed, green 17 passed, skipped 0) | feat(dashboard): add stats aggregation service and cache | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 09 stage 2: Dashboard Livewire page at GET /admin/dashboard (dashboard.read, small boxes with Money, orders by status, warning alert, refresh action, error state), StaffAwareLoginResponse (staff with dashboard.read to /admin/dashboard, others to /), menu entry, tests | feat(dashboard): add admin dashboard page | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 08 stage 2: comment::thread embedded in the product and article detail views (inside the single Livewire root; a failing CommentService renders the generic message and the host page stays 200), admin CommentIndex at /admin/comments (comments.moderate; filters status, entity_type, deleted; hide, show, delete; actions re-authorize), routes in the Comment module, Comments menu entry, tests for embeds and admin pages (guest redirect, member and non-permitted 403, moderator 200), obsolete catalog test about the missing comments slot replaced (full suite 709 passed, skipped 0) | feat(comment): add page embeds and moderation | STAGE CHECK green | none
