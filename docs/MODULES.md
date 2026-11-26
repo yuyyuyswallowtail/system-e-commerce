@@ -93,3 +93,9 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - No tables. GET /admin/dashboard (dashboard.read) is the AdminLTE home for staff. Blocks: sales {orders, payments}, stock {stock, catalog}, content {articles, comments}. Each block is the provider array unchanged or `null` when its provider throws; failed block names are shown in a warning alert.
 - Cache with Laravel `Cache` per provider, TTL [`stats_cache_ttl`] (0 disables), never cache failures.
 - `StatsProvider` Contract: `name(): string`, `stats(): array`; each module binds its provider with the tag `module.stats`.
+
+## Inventory build notes (prompt 03)
+- Events use subject type `stock`: StockAdjusted carries the product uuid, StockReserved, StockCommitted and StockReleased carry the order uuid.
+- `InventoryService` also exposes `adjust(productUuid, delta, reason, actorId): StockItem` and `expire(?array $productUuids): int` (not part of the `Inventory` contract). The `order_commit` reason is rejected by manual adjust.
+- Config: `shop.inventory.reservation_max_items`, `shop.inventory.commit_reason`, `shop.inventory.statuses`. Table lists `stock` and `movements` are in `config/tables.php`.
+- `stock_reservations` has unique(order_uuid, product_uuid) and index(status, expires_at).
