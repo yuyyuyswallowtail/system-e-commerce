@@ -138,3 +138,4 @@ Spatie tables come from the package migrations. `jobs`, `cache`, `sessions` come
 - `NotifyUser` finds the user by the event `userId`, skips and logs a missing user, and stores `event_uuid` in the notification data so a retry never duplicates. `NotificationServiceProvider` queues it only for classes that exist and logs queue failures.
 - Notification data shape: `type`, `title`, `body`, `data` {order_uuid, amount, currency, event_uuid}.
 - Routes: `notifications.index` GET /notifications (auth). Livewire `notification.unread-badge` is embedded in the storefront navbar.
+- The unread badge is the Livewire component in the storefront navbar. The AdminLTE staff layout shows a Notifications menu entry but no badge (the AdminLTE 3 navbar has no slot for a Livewire component without changing the layout package config).
