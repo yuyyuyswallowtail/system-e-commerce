@@ -56,8 +56,8 @@ it('returns 404 for an unknown product uuid', function () {
     $this->get('/products/not-a-uuid')->assertNotFound();
 });
 
-it('does not render a comments slot yet', function () {
+it('renders the comments thread on the product page', function () {
     $product = CatalogKit::product(['status' => 'active']);
 
-    $this->get('/products/'.$product->uuid)->assertOk()->assertDontSee('comment', false);
+    $this->get('/products/'.$product->uuid)->assertOk()->assertSeeLivewire('comment::thread');
 });

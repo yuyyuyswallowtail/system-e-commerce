@@ -12,4 +12,7 @@
         <div class="article-body">{{ $article->bodyHtml() }}</div>
         <a href="{{ route('articles.index') }}" class="btn btn-outline-secondary mt-3">Back to articles</a>
     </div>
+    <div class="col-md-8 offset-md-2 mt-4">
+        <livewire:comment::thread entity-type="article" :entity-uuid="$article->uuid" :key="'comments-'.$article->uuid" />
+    </div>
 </div>

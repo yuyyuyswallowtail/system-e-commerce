@@ -17,4 +17,7 @@
         <p style="white-space: pre-line;">{{ $product->description }}</p>
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">Back to products</a>
     </div>
+    <div class="col-12 mt-4">
+        <livewire:comment::thread entity-type="product" :entity-uuid="$product->uuid" :key="'comments-'.$product->uuid" />
+    </div>
 </div>

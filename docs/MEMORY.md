@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 08 (comment) stage 1 done.
+Last updated: 2026-11-26, prompt 08 (comment) stage 2 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -22,7 +22,7 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 05 | 05-checkout.md (4 stages) | Payment + Order | feat/05-checkout | done | feat(order): add scheduled expiry and checkout journey test |
 | 06 | 06-history-notification.md (2 stages) | History, Notification | feat/06-history-notification | done | feat(notification): add order and payment notifications |
 | 07 | 07-content.md (2 stages) | Content | feat/07-content | done | feat(content): add public and admin article pages |
-| 08 | 08-comment.md (2 stages) | Comment | feat/08-comment | in-progress | feat(comment): add schema, comment service, and thread component |
+| 08 | 08-comment.md (2 stages) | Comment | feat/08-comment | done | feat(comment): add page embeds and moderation |
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/dashboard | not-started | |
 | 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/finalize | not-started | |
 Prompt files `NN-<name>.md` live in `prompts/` and are git-ignored. Branches are chained: each prompt branches from the previous prompt branch; the owner merges `feat/finalize` into `main` at the end. They may be missing on a fresh clone: ask the owner.
@@ -39,10 +39,11 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 08 stage 1 done on branch feat/08-comment. Next: prompt 08 stage 2 (embed comment::thread in the product and article detail pages, admin moderation page at /admin/comments, menu entry).
+Prompt 08 done (both stages) on branch feat/08-comment. Next: prompt 09 (dashboard), branching from feat/08-comment.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-26 | claude | prompt 08 stage 2: comment::thread embedded in the product and article detail views (inside the single Livewire root; a failing CommentService renders the generic message and the host page stays 200), admin CommentIndex at /admin/comments (comments.moderate; filters status, entity_type, deleted; hide, show, delete; actions re-authorize), routes in the Comment module, Comments menu entry, tests for embeds and admin pages (guest redirect, member and non-permitted 403, moderator 200), obsolete catalog test about the missing comments slot replaced (full suite 709 passed, skipped 0) | feat(comment): add page embeds and moderation | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 08 stage 1: comments migration (entity_uuid without FK, self FK parent_id, soft delete, index on entity_type, entity_uuid, status), Comment model (uuid, activitylog whitelist), CommentService (post with target check, one reply level, length, flood limit; editOwn, deleteOwn, hide, show, deleteByModerator), CommentPolicy, CommentPosted, CommentStats (module.stats tag), CommentServiceProvider, comment::thread Livewire component with locked props and escaped bodies, config tables.comments, tests (full suite 694 passed, skipped 0) | feat(comment): add schema, comment service, and thread component | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 07 stage 1: articles migration, Article model (uuid, unique slug incl. soft-deleted, activitylog without body), ArticlePresenter (sanitized markdown), ArticleService (create, update, publish, unpublish, archive, delete, restore, uploadCover), ArticleDirectory contract and service, ContentStats, ArticlePublished, ContentServiceProvider, config shop.article and tables.articles, tests (red 32 failed, green 32 passed, skipped 0) | feat(content): add schema, article service, and article directory contract | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 07 stage 2: public pages /articles and /articles/{slug} (published only, staff preview), admin list and form with publish, unpublish, archive, delete, restore, cover upload and sanitized markdown preview, menu entry, tests | feat(content): add public and admin article pages | STAGE CHECK green | none

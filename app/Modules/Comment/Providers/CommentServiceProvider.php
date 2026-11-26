@@ -23,6 +23,7 @@ final class CommentServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         Gate::policy(Comment::class, CommentPolicy::class);
         Livewire::addNamespace('comment', null, 'App\\Modules\\Comment\\Livewire');
     }
