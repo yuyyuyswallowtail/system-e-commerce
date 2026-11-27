@@ -10,15 +10,15 @@
 
 @section('body')
     <div class="wrapper" data-layout="storefront">
-        <a class="skip-link" href="#main-content">Skip to main content</a>
+        <a class="skip-link" href="#main-content">{{ __('storefront.ui.skip') }}</a>
 
-        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" aria-label="Main">
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" aria-label="{{ __('storefront.ui.nav_label') }}">
             <div class="container">
                 <a href="{{ url('/') }}" class="navbar-brand">
                     <span class="brand-text">{{ config('app.name') }}</span>
                 </a>
 
-                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#storefront-nav" aria-controls="storefront-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#storefront-nav" aria-controls="storefront-nav" aria-expanded="false" aria-label="{{ __('storefront.ui.toggle_nav') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -35,16 +35,16 @@
                     <ul class="navbar-nav ml-auto">
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Log in</a></li>
+                                <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">{{ __('storefront.ui.login') }}</a></li>
                             @endif
                             @if (Route::has('register'))
-                                <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Create account</a></li>
+                                <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">{{ __('storefront.ui.register') }}</a></li>
                             @endif
                         @endguest
 
                         @auth
                             @if (Route::has('cart.index'))
-                                <li class="nav-item"><a href="{{ route('cart.index') }}" class="nav-link">Cart</a></li>
+                                <li class="nav-item"><a href="{{ route('cart.index') }}" class="nav-link">{{ __('storefront.nav.cart') }}</a></li>
                             @endif
                             @if (Route::has('notifications.index'))
                                 <livewire:notification.unread-badge />
@@ -53,15 +53,15 @@
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     @if (Route::has('me'))
-                                        <a class="dropdown-item" href="{{ route('me') }}">My account</a>
+                                        <a class="dropdown-item" href="{{ route('me') }}">{{ __('storefront.ui.account') }}</a>
                                     @endif
                                     @if (Route::has('orders.index'))
-                                        <a class="dropdown-item" href="{{ route('orders.index') }}">My orders</a>
+                                        <a class="dropdown-item" href="{{ route('orders.index') }}">{{ __('storefront.ui.orders') }}</a>
                                     @endif
                                     @if (Route::has('logout'))
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
-                                            <button type="submit" class="dropdown-item">Log out</button>
+                                            <button type="submit" class="dropdown-item">{{ __('storefront.ui.logout') }}</button>
                                         </form>
                                     @endif
                                 </div>

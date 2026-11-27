@@ -572,3 +572,24 @@ img { max-width: 100%; height: auto; }
 }
 .article-cover-wrap { max-width: var(--measure); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .article-cover-wrap .visual { border-bottom: 0; }
+
+/* Storefront touch targets: at least 44px on interactive controls */
+.product-card .btn,
+.product-card .btn-sm,
+.product-card .form-control,
+.segmented__item,
+.site-footer .btn,
+.article-card__link,
+.featured-card .btn,
+.pagination .page-link,
+.main-header .nav-link,
+.main-header .dropdown-item,
+.main-header .navbar-toggler {
+  min-height: var(--touch);
+}
+.product-card .form-control { height: var(--touch); }
+.main-header .nav-link,
+.main-header .dropdown-item,
+.article-card__link { display: inline-flex; align-items: center; }
+.main-header .dropdown-item { display: flex; }
+.pagination .page-link { min-width: var(--touch); display: inline-flex; align-items: center; justify-content: center; }

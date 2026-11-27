@@ -41,18 +41,18 @@
 
     <div class="filter-bar" role="search">
         <div class="filter-bar__field filter-bar__field--grow form-group">
-            <label for="product-search">Search</label>
-            <input id="product-search" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Name or SKU" autocomplete="off">
+            <label for="product-search">{{ __('storefront.ui.search_label') }}</label>
+            <input id="product-search" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('storefront.ui.search_placeholder') }}" autocomplete="off">
         </div>
         <div class="form-group">
-            <span class="d-block mb-1 font-weight-bold" id="product-sort-label">Sort by</span>
+            <span class="d-block mb-1 font-weight-bold" id="product-sort-label">{{ __('storefront.ui.sort_by') }}</span>
             <div class="segmented" role="group" aria-labelledby="product-sort-label">
-                @foreach (['name' => 'Name', 'price_amount' => 'Price'] as $field => $label)
+                @foreach (['name' => __('storefront.ui.sort_name'), 'price_amount' => __('storefront.ui.sort_price')] as $field => $label)
                     <button type="button" class="segmented__item" wire:click="sortBy('{{ $field }}')" aria-pressed="{{ $sortField === $field ? 'true' : 'false' }}">
                         {{ $label }}
                         @if ($sortField === $field)
                             <i class="fas fa-arrow-{{ $sortDirection === 'asc' ? 'up' : 'down' }}" aria-hidden="true"></i>
-                            <span class="sr-only">{{ $sortDirection === 'asc' ? 'ascending' : 'descending' }}</span>
+                            <span class="sr-only">{{ $sortDirection === 'asc' ? __('storefront.ui.ascending') : __('storefront.ui.descending') }}</span>
                         @endif
                     </button>
                 @endforeach
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <p class="text-muted" wire:loading.delay role="status">Updating results&hellip;</p>
+    <p class="text-muted" wire:loading.delay role="status">{{ __('storefront.ui.updating') }}</p>
 
     <div class="row">
         @forelse ($products as $product)
@@ -69,7 +69,7 @@
             </div>
         @empty
             <div class="col-12">
-                <x-empty-state title="No products found" text="Try a different search or choose another category." :action-url="route('products.index')" action-label="Show all products" />
+                <x-empty-state :title="__('storefront.ui.products_empty_title')" :text="__('storefront.ui.products_empty_text')" :action-url="route('products.index')" :action-label="__('storefront.ui.products_empty_action')" />
             </div>
         @endforelse
     </div>

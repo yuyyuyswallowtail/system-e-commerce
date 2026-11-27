@@ -9,8 +9,8 @@
 
     <div class="filter-bar" role="search">
         <div class="filter-bar__field filter-bar__field--grow form-group">
-            <label for="article-search">Search articles</label>
-            <input id="article-search" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Title or keyword" autocomplete="off">
+            <label for="article-search">{{ __('storefront.ui.article_search_label') }}</label>
+            <input id="article-search" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="{{ __('storefront.ui.article_search_placeholder') }}" autocomplete="off">
         </div>
     </div>
 
@@ -44,9 +44,9 @@
             @if (! $featured)
                 <div class="col-12">
                     @if ($search !== '')
-                        <x-empty-state title="No articles found" text="Try a different search." :action-url="route('articles.index')" action-label="Show all articles" />
+                        <x-empty-state :title="__('storefront.ui.articles_no_match_title')" :text="__('storefront.ui.articles_no_match_text')" :action-url="route('articles.index')" :action-label="__('storefront.ui.articles_no_match_action')" />
                     @else
-                        <x-empty-state title="No articles yet" text="Check back soon, or look around the shop in the meantime." :action-url="route('products.index')" action-label="Browse products" />
+                        <x-empty-state :title="__('storefront.ui.articles_none_title')" :text="__('storefront.ui.articles_none_text')" :action-url="route('products.index')" :action-label="__('storefront.ui.articles_none_action')" />
                     @endif
                 </div>
             @endif
