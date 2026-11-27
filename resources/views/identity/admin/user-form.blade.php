@@ -1,3 +1,6 @@
+<div>
+    <x-page-header title="User details" />
+
 <div class="row">
     <div class="col-md-6">
         @if ($notice)
@@ -6,7 +9,7 @@
         @error('user') <div class="alert alert-danger">{{ $message }}</div> @enderror
 
         <div class="card card-primary card-outline">
-            <div class="card-header"><h3 class="card-title">{{ $target ? 'Edit user' : 'New user' }}</h3></div>
+            <div class="card-header"><h2 class="card-title">{{ $target ? 'Edit user' : 'New user' }}</h2></div>
             <form wire:submit="save">
                 <div class="card-body">
                     <div class="form-group">
@@ -27,7 +30,7 @@
                         </div>
                     @endunless
                 </div>
-                <div class="card-footer"><button type="submit" class="btn btn-primary">Save</button></div>
+                <div class="card-footer"><button type="submit" wire:loading.attr="disabled" class="btn btn-primary">Save</button></div>
             </form>
         </div>
     </div>
@@ -36,24 +39,24 @@
         <div class="col-md-6">
             @can('users.status')
                 <div class="card card-outline card-warning">
-                    <div class="card-header"><h3 class="card-title">Status</h3></div>
+                    <div class="card-header"><h2 class="card-title">Status</h2></div>
                     <form wire:submit="changeStatus">
                         <div class="card-body">
-                            <select wire:model="status" class="form-control @error('status') is-invalid @enderror">
+                            <select aria-label="Status" wire:model="status" class="form-control @error('status') is-invalid @enderror">
                                 @foreach ($statuses as $status)
                                     <option value="{{ $status }}">{{ ucfirst($status) }}</option>
                                 @endforeach
                             </select>
                             @error('status') <span class="invalid-feedback">{{ $message }}</span> @enderror
                         </div>
-                        <div class="card-footer"><button type="submit" class="btn btn-warning">Change status</button></div>
+                        <div class="card-footer"><button type="submit" wire:loading.attr="disabled" class="btn btn-warning">Change status</button></div>
                     </form>
                 </div>
             @endcan
 
             @can('users.roles')
                 <div class="card card-outline card-info">
-                    <div class="card-header"><h3 class="card-title">Roles</h3></div>
+                    <div class="card-header"><h2 class="card-title">Roles</h2></div>
                     <form wire:submit="saveRoles">
                         <div class="card-body">
                             @foreach ($roleNames as $roleName)
@@ -64,13 +67,13 @@
                             @endforeach
                             @error('roles') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="card-footer"><button type="submit" class="btn btn-info">Save roles</button></div>
+                        <div class="card-footer"><button type="submit" wire:loading.attr="disabled" class="btn btn-info">Save roles</button></div>
                     </form>
                 </div>
             @endcan
 
             <div class="card card-outline card-danger">
-                <div class="card-header"><h3 class="card-title">Danger zone</h3></div>
+                <div class="card-header"><h2 class="card-title">Danger zone</h2></div>
                 <div class="card-body">
                     @if ($target->trashed())
                         @can('users.restore')
@@ -88,4 +91,5 @@
             </div>
         </div>
     @endif
+</div>
 </div>

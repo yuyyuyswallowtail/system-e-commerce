@@ -47,7 +47,7 @@
                                     <td class="text-muted">-</td>
                                 @endif
                                 <td class="text-right">
-                                    <button type="button" class="btn btn-sm btn-outline-danger" wire:click="remove('{{ $row['uuid'] }}')">Remove</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" wire:click="remove('{{ $row['uuid'] }}')" wire:confirm="Remove this item from your cart?">Remove</button>
                                 </td>
                             </tr>
                         @endforeach

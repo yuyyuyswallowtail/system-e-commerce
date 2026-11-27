@@ -36,3 +36,11 @@ Append a row with the next ID, status `proposed` or `open`, one sentence, and th
 ## Cart pages (prompt 04, stage 2)
 - The add button is registered as `cart.add-button` instead of the namespaced `cart::add-button`, to follow the existing `inventory.availability-badge` convention in this code base.
 - New config key `shop.cart_available_product_status` (value `active`) names the catalog status that lets a cart line be checked out, so views and components never hardcode it.
+
+## UI polish build notes (prompt 11)
+- Behavior is frozen: only Blade views, `public/css/theme.css`, `config/ui.php`, menu presentation in `config/adminlte.php`, demo seed content and tests changed.
+- Tokens, contrast ratios and component rules are documented in `docs/DESIGN.md`; status badge variants and icon names live in `config/ui.php` and a unit test checks every status in `config/shop.php`.
+- Storefront and admin screens share `x-page-header`, `x-empty-state`, `x-status-badge` and `x-stat-card`; every page renders exactly one h1, labelled controls and an empty state.
+- Destructive actions carry `wire:confirm` that names the consequence; submit buttons disable while loading; `ViewRulesTest` enforces this, plus no small-box, inline style, hex color or lorem in views.
+- The sidebar has Shop, Management and Identity section headers; entries keep their `can` keys, so a member never sees staff entries.
+- Old view tests were updated to the new markup (capitalized badge labels, empty-state copy without trailing period); none were deleted or skipped.

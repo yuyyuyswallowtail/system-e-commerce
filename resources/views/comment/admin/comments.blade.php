@@ -1,9 +1,12 @@
+<div>
+    <x-page-header title="Comments" />
+
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-md-4"><input type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search body"></div>
+            <div class="col-md-4"><input aria-label="Search body" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search body"></div>
             <div class="col-md-2">
-                <select wire:model.live="filters.status" class="form-control">
+                <select aria-label="Status" wire:model.live="filters.status" class="form-control">
                     <option value="">All statuses</option>
                     @foreach ($statuses as $status)
                         <option value="{{ $status }}">{{ ucfirst($status) }}</option>
@@ -11,7 +14,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <select wire:model.live="filters.entity_type" class="form-control">
+                <select aria-label="Entity type" wire:model.live="filters.entity_type" class="form-control">
                     <option value="">All entities</option>
                     @foreach ($entityTypes as $type)
                         <option value="{{ $type }}">{{ ucfirst($type) }}</option>
@@ -19,7 +22,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <select wire:model.live="deleted" class="form-control">
+                <select aria-label="Deleted" wire:model.live="deleted" class="form-control">
                     @foreach ($modes as $mode)
                         <option value="{{ $mode }}">Deleted: {{ $mode }}</option>
                     @endforeach
@@ -30,7 +33,7 @@
             <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
         @enderror
     </div>
-    <div class="card-body table-responsive p-0">
+    <div class="card-body table-responsive table-sticky p-0">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -53,7 +56,7 @@
                         <td class="text-right text-nowrap">
                             @if (! $comment->trashed())
                                 @if ($comment->status === 'visible')
-                                    <button type="button" wire:click="hide('{{ $comment->uuid }}')" class="btn btn-sm btn-outline-warning">Hide</button>
+                                    <button type="button" wire:click="hide('{{ $comment->uuid }}')" wire:confirm="Hide this comment? Visitors will no longer see it." class="btn btn-sm btn-outline-warning">Hide</button>
                                 @else
                                     <button type="button" wire:click="show('{{ $comment->uuid }}')" class="btn btn-sm btn-outline-success">Show</button>
                                 @endif
@@ -68,4 +71,5 @@
         </table>
     </div>
     <div class="card-footer">{{ $comments->links() }}</div>
+</div>
 </div>

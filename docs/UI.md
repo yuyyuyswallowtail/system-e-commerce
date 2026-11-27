@@ -27,3 +27,6 @@ Labels for every input, buttons with text, English copy only, short messages.
 
 ## 6. Design system
 Colors, type, spacing, radius, elevation and component rules live in `docs/DESIGN.md`. The only stylesheet is `public/css/theme.css`, status badge variants and icon names are in `config/ui.php`, and the stat card is `<x-stat-card>`. Views never use inline styles or hex colors.
+
+## 7. Admin screens
+Every admin screen starts with `<x-page-header>` (one h1), card titles are h2, lists have a filter bar with labelled controls, sticky header, right-aligned money, an empty state and pagination. The sidebar groups entries under Shop, Management and Identity headers.

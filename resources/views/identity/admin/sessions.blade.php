@@ -1,8 +1,11 @@
 <div>
+    <x-page-header title="Sessions" />
+
+<div>
     @if ($notice)
-        <div class="alert alert-success">{{ $notice }}</div>
+        <div class="alert alert-success" role="status">{{ $notice }}</div>
     @endif
-    @error('session') <div class="alert alert-danger">{{ $message }}</div> @enderror
+    @error('session') <div class="alert alert-danger" role="alert">{{ $message }}</div> @enderror
 
     <ul class="nav nav-tabs mb-3">
         <li class="nav-item"><a href="#" wire:click.prevent="$set('tab', 'sessions')" class="nav-link {{ $online ? '' : 'active' }}">Sessions</a></li>
@@ -12,7 +15,7 @@
     </ul>
 
     <div class="card">
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive table-sticky p-0">
             @if ($online)
                 <table class="table table-hover">
                     <thead><tr><th>User</th><th>Email</th><th>Last activity</th></tr></thead>
@@ -40,13 +43,13 @@
                                 <td>{{ \Illuminate\Support\Carbon::createFromTimestamp($row->last_activity)->diffForHumans() }}</td>
                                 <td class="text-right">
                                     @can('sessions.revoke')
-                                        <button type="button" wire:click="revoke(@js($row->id))" wire:confirm="Revoke this session?" class="btn btn-sm btn-outline-danger">Revoke</button>
-                                        <button type="button" wire:click="revokeUser({{ (int) $row->user_id }})" wire:confirm="Revoke all sessions of this user?" class="btn btn-sm btn-outline-secondary">Revoke all</button>
+                                        <button type="button" wire:click="revoke(@js($row->id))" wire:confirm="Revoke this session? The user is signed out on that device." class="btn btn-sm btn-outline-danger">Revoke</button>
+                                        <button type="button" wire:click="revokeUser({{ (int) $row->user_id }})" wire:confirm="Revoke all sessions of this user? They are signed out everywhere." class="btn btn-sm btn-outline-secondary">Revoke all</button>
                                     @endcan
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="5" class="text-center text-muted">No sessions.</td></tr>
+                            <tr><td colspan="5" class="text-center text-muted">No active sessions.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -56,4 +59,5 @@
             <div class="card-footer">{{ $rows->links() }}</div>
         @endunless
     </div>
+</div>
 </div>

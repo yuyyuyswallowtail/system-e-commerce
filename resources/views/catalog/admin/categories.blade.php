@@ -1,3 +1,6 @@
+<div>
+    <x-page-header title="Categories" />
+
 <div class="row">
     <div class="col-md-8">
         @if ($notice)
@@ -7,9 +10,9 @@
 
         <div class="card">
             <div class="card-header">
-                <input type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search name or slug">
+                <input aria-label="Search name or slug" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search name or slug">
             </div>
-            <div class="card-body table-responsive p-0">
+            <div class="card-body table-responsive table-sticky p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -44,7 +47,7 @@
 
     <div class="col-md-4">
         <div class="card card-primary card-outline">
-            <div class="card-header"><h3 class="card-title">{{ $editingUuid ? 'Edit category' : 'New category' }}</h3></div>
+            <div class="card-header"><h2 class="card-title">{{ $editingUuid ? 'Edit category' : 'New category' }}</h2></div>
             <form wire:submit="save">
                 <div class="card-body">
                     <div class="form-group">
@@ -64,7 +67,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" wire:loading.attr="disabled" class="btn btn-primary">Save</button>
                     @if ($editingUuid)
                         <button type="button" wire:click="cancel" class="btn btn-default">Cancel</button>
                     @endif
@@ -72,4 +75,5 @@
             </form>
         </div>
     </div>
+</div>
 </div>

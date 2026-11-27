@@ -71,3 +71,6 @@ System font stack (`--font-sans`), fixed scale in rem: 12, 14, 16, 20, 24, 32 px
 - Motion: transitions of `--duration` (120 ms) at most, switched off under `prefers-reduced-motion`.
 - Banned: purple to blue gradients, glassmorphism, decorative blobs, emoji icons, neon glow, inline `style=`, hex colors in views, `!important` outside the reduced-motion rule.
 - Copy: English, sentence case, specific. No "Success!", no "Oops", no lorem.
+
+## 7. Review checklist (scripted)
+`tests/Feature/Ui/AdminPagesTest.php` and `StorefrontPagesTest.php` assert one h1, lang, viewport, labels, alt text and accessible names on every page. `tests/Unit/Ui/ViewRulesTest.php` enforces confirmations on destructive actions, no inline styles, hex colors, lorem or small-box in views, and at most 15 commented `!important` in the stylesheet. `ContrastTest` enforces the token contrast ratios.

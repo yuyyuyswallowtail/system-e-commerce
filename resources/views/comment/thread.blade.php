@@ -14,7 +14,7 @@
                     @endif
                     <textarea wire:model="body" class="form-control @error('body') is-invalid @enderror" rows="3" maxlength="{{ config('shop.comment_max_length') }}" placeholder="Write a comment"></textarea>
                     @error('body') <div class="text-danger small">{{ $message }}</div> @enderror
-                    <button type="submit" class="btn btn-primary btn-sm mt-2">Post comment</button>
+                    <button type="submit" wire:loading.attr="disabled" class="btn btn-primary btn-sm mt-2">Post comment</button>
                 </form>
             @else
                 <p class="text-muted">

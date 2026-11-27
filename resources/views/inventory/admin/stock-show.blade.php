@@ -1,7 +1,10 @@
 <div>
+    <x-page-header title="Stock details" />
+
+<div>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ $name ?? $productUuid }}</h3>
+            <h2 class="card-title">{{ $name ?? $productUuid }}</h2>
             <div class="card-tools"><a href="{{ route('admin.stock.index') }}" class="btn btn-sm btn-outline-secondary">Back to stock</a></div>
         </div>
         <div class="card-body">
@@ -16,7 +19,7 @@
 
     @if ($canAdjust)
         <div class="card">
-            <div class="card-header"><h3 class="card-title">Adjust stock</h3></div>
+            <div class="card-header"><h2 class="card-title">Adjust stock</h2></div>
             <div class="card-body">
                 @if ($notice !== '')
                     <div class="alert alert-success">{{ $notice }}</div>
@@ -45,8 +48,8 @@
     @endif
 
     <div class="card">
-        <div class="card-header"><h3 class="card-title">Movements</h3></div>
-        <div class="card-body table-responsive p-0">
+        <div class="card-header"><h2 class="card-title">Movements</h2></div>
+        <div class="card-body table-responsive table-sticky p-0">
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
@@ -74,4 +77,5 @@
         </div>
         <div class="card-footer">{{ $movements->links() }}</div>
     </div>
+</div>
 </div>
