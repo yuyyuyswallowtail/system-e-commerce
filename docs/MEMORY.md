@@ -106,3 +106,9 @@ None recorded.
 - adminlte:install --force (basic) published assets and config; the published lang/vendor/adminlte folder was removed because lang/ is outside the allowed paths (the package ships its own translations).
 - fortify:install also published the two-factor and passkeys migrations (database/migrations); they are not run yet.
 - Spatie permission and activitylog migrations are published but not run yet; prompt 01 owns the migrate step.
+
+### 2026-11-27, prompt 12 stage 1 (storefront richness: demo content and visual components)
+- DemoDataSeeder rewritten and idempotent (updateOrCreate on sku and slug): 5 categories, 16 products with varied stock (one out of stock, several at 4 or fewer), 6 multi-paragraph articles with staggered dates. Legacy "Demo ..." and placeholder rows are renamed in place when referenced and deleted otherwise.
+- New components: product-visual and article-cover (image when present, otherwise a tinted placeholder with a category icon and CSS pattern). Tint and icon maps are in config/ui.php, tint tokens in public/css/theme.css.
+- Tests added for the components, the seeder and the category map. Full suite green, no skipped tests.
+- Next: stage 2, storefront pages (hero, category chips, product card, product detail, articles, footer).
