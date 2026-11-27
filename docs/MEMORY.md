@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-27, prompt 11 (ui-polish) stage 3 done.
+Last updated: 2026-11-27, prompt 12 (storefront richness) stage 2 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -26,8 +26,9 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/09-dashboard | done | feat(dashboard): add admin dashboard page |
 | 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/10-finalize | done | docs: add README and finalize hardening review |
 | 11 | 11-ui-polish.md (3 stages) | design pass: tokens, storefront and auth, admin | feat/11-ui-polish | done | feat(ui): redesign admin screens and finalize design system |
+| 12 | 12-storefront-richness.md (2 stages) | demo content, visual components, storefront pages | feat/12-storefront-richness | done | feat(ui): enrich storefront pages and footer |
 Prompt files `NN-<name>.md` live in `prompts/` and are git-ignored. Branches are chained: each prompt branches from the previous prompt branch; the owner merges `feat/finalize` into `main` at the end. They may be missing on a fresh clone: ask the owner.
-Run order: 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11. Build providers before callers.
+Run order: 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12. Build providers before callers.
 
 ## 3. Verify commands (copy-paste from repo root)
 ```
@@ -40,10 +41,11 @@ php artisan test
 
 ## 4. Next step
 
-Prompt 11 (UI polish) is done on branch feat/11-ui-polish: tokens, storefront, authentication and admin screens, docs/DESIGN.md. Next: the owner reviews and merges the branch chain; no further prompt is planned.
+Prompt 12 (storefront richness) is done on branch feat/12-storefront-richness: realistic demo content, visual components, hero, category chips, product cards, product detail, articles and footer. Next: the owner reviews and merges the branch chain; no further prompt is planned.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-27 | claude | prompt 12 stage 2: storefront pages (hero with two actions, category chips, trust strip, x-product-card with visual, clamped name, tabular price, stock badge and disabled out-of-stock action, two-column product detail, featured article card and grid, readable article detail, three-column footer with labelled navs, copy in lang/en/storefront.php), StorefrontRichnessTest with DOM checks (full suite 901 passed, skipped 0), docs/DESIGN.md, DECISIONS.md D-M026 | feat(ui): enrich storefront pages and footer | STAGE CHECK green | none
 - 2026-11-27 | claude | prompt 11 stage 3: admin redesign (page headers, labelled filters, sticky tables, right-aligned money, status badges from config/ui.php, stat-card dashboard without small-box, sidebar section headers, wire:confirm naming consequences, submit buttons disabled while loading, unsaved hint on permissions), AdminPagesTest and ViewRulesTest, docs/DESIGN.md, UI.md and DECISIONS.md finished (full suite green, skipped 0) | feat(ui): redesign admin screens and finalize design system | STAGE CHECK green | none
 - 2026-11-27 | claude | prompt 11 stage 2: storefront and authentication redesign (page-header, empty-state and status-badge components, cards, search and filter bar, responsive stacked tables, labels on every control, skip link, one h1 per page, ux-copy for labels and empty states), DemoDataSeeder with realistic English content (idempotent, keys kept, users untouched), tests first (DomAudit structural audit on 16 pages, empty states, responsive CSS), old view tests updated to the new markup (full suite 856 passed, skipped 0) | feat(ui): redesign storefront and authentication screens | STAGE CHECK green | none
 - 2026-11-27 | claude | prompt 11 stage 1: design tokens in public/css/theme.css (9-step neutral scale, one green accent, tuned status colors, fixed type scale, 4/8 spacing, one radius, two elevations), restyled buttons, cards, tables, forms, badges, alerts, pagination, navbar, sidebar, breadcrumbs, modals and focus rings, config/ui.php (status badge variants, stat tones, icons), x-stat-card component, both layouts link theme.css after the AdminLTE CSS, Google Fonts off, inline styles replaced by classes, welcome view rewritten without Tailwind, docs/DESIGN.md, D-M024 and D-M025 (tests first: red 57 failed, green 61 passed; full suite 820 passed, skipped 0) | feat(ui): add design tokens and shared components | STAGE CHECK green | none
@@ -106,3 +108,9 @@ None recorded.
 - adminlte:install --force (basic) published assets and config; the published lang/vendor/adminlte folder was removed because lang/ is outside the allowed paths (the package ships its own translations).
 - fortify:install also published the two-factor and passkeys migrations (database/migrations); they are not run yet.
 - Spatie permission and activitylog migrations are published but not run yet; prompt 01 owns the migrate step.
+
+### 2026-11-27, prompt 12 stage 1 (storefront richness: demo content and visual components)
+- DemoDataSeeder rewritten and idempotent (updateOrCreate on sku and slug): 5 categories, 16 products with varied stock (one out of stock, several at 4 or fewer), 6 multi-paragraph articles with staggered dates. Legacy "Demo ..." and placeholder rows are renamed in place when referenced and deleted otherwise.
+- New components: product-visual and article-cover (image when present, otherwise a tinted placeholder with a category icon and CSS pattern). Tint and icon maps are in config/ui.php, tint tokens in public/css/theme.css.
+- Tests added for the components, the seeder and the category map. Full suite green, no skipped tests.
+- Next: stage 2, storefront pages (hero, category chips, product card, product detail, articles, footer).

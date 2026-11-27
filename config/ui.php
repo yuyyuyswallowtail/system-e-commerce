@@ -74,4 +74,19 @@ return [
         'empty' => 'fas fa-folder-open',
     ],
 
+    // Product visual and article cover: tint tokens live in public/css/theme.css (--tint-*-bg and --tint-*-fg).
+    'visuals' => [
+        'tints' => ['sage', 'sand', 'sky', 'clay', 'stone'],
+        'default' => ['tint' => 'stone', 'icon' => 'fas fa-box'],
+        'article' => ['tint' => 'sand'],
+        // Keyed by category slug. A test checks that every seeded category has an entry.
+        'categories' => [
+            'home-living' => ['tint' => 'clay', 'icon' => 'fas fa-couch'],
+            'workspace' => ['tint' => 'sky', 'icon' => 'fas fa-desktop'],
+            'kitchen' => ['tint' => 'sage', 'icon' => 'fas fa-mug-hot'],
+            'travel' => ['tint' => 'sand', 'icon' => 'fas fa-suitcase-rolling'],
+            'stationery' => ['tint' => 'stone', 'icon' => 'fas fa-pen-nib'],
+        ],
+    ],
+
 ];

@@ -29,6 +29,7 @@ Status: `accepted` = fixed by the owner. `proposed` = default chosen when writin
 | D-M023 | proposed | `config/permissions.php` roles use `*` for all permissions and `all_except` for all but the listed codes; member is an empty list | identity |
 | D-M024 | proposed | Design system: one stylesheet `public/css/theme.css` with custom-property tokens (colors, type scale, spacing, radius, elevation) linked by both layouts after the AdminLTE CSS, and `config/ui.php` for status badge variants and icon names; Google Fonts is turned off in config/adminlte.php | all |
 | D-M025 | proposed | A neutral anonymous Blade component `x-stat-card` (label, value, optional delta, note, tone) replaces the AdminLTE small-box on the dashboard; a status tone is used only when the number carries meaning | dashboard |
+| D-M026 | proposed | Storefront visuals are Blade components (`x-product-visual`, `x-article-cover`, `x-product-card`) that show the model image when present and otherwise a CSS placeholder with a category tint and icon from `config/ui.php`; storefront copy lives in `lang/en/storefront.php`; no new package, font, image or CDN | catalog, content |
 
 ## How to add a decision
 Append a row with the next ID, status `proposed` or `open`, one sentence, and the modules it affects. If it changes a contract, update `docs/MODULES.md` in the same commit.
@@ -44,3 +45,8 @@ Append a row with the next ID, status `proposed` or `open`, one sentence, and th
 - Destructive actions carry `wire:confirm` that names the consequence; submit buttons disable while loading; `ViewRulesTest` enforces this, plus no small-box, inline style, hex color or lorem in views.
 - The sidebar has Shop, Management and Identity section headers; entries keep their `can` keys, so a member never sees staff entries.
 - Old view tests were updated to the new markup (capitalized badge labels, empty-state copy without trailing period); none were deleted or skipped.
+
+## Storefront richness build notes (prompt 12)
+- Behavior is frozen: only Blade views, `public/css/theme.css`, `config/ui.php`, `lang/`, the demo seeder and tests changed.
+- The demo seeder is idempotent (updateOrCreate on sku and slug); legacy "Demo ..." rows are renamed in place when referenced and deleted otherwise.
+- `StorefrontRichnessTest` checks one h1, alt text, hero actions, labelled footer navs, and visual, price and stock text on every product card.
