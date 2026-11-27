@@ -35,7 +35,7 @@ it('forbids staff without the permission', function () {
 it('shows an empty state', function () {
     $member = IdentityKit::user('member');
 
-    $this->actingAs($member)->get('/me/history')->assertSee('No history yet.');
+    $this->actingAs($member)->get('/me/history')->assertSee('No history yet');
 });
 
 it('lists only the events of the logged in user', function () {

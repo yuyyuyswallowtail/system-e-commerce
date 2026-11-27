@@ -1,5 +1,5 @@
 <div>
-    <h2 class="mb-3">Your cart</h2>
+    <x-page-header title="Your cart" subtitle="Review your items before checkout." />
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -36,7 +36,7 @@
                                 @if ($row['available'])
                                     <td>{{ \App\Support\Money::format($row['unitPrice'], $row['currency']) }}</td>
                                     <td>
-                                        <input type="number" min="1" max="{{ $maxQuantity }}" value="{{ $row['quantity'] }}"
+                                        <input type="number" aria-label="Quantity for {{ $row['name'] ?? $row['uuid'] }}" min="1" max="{{ $maxQuantity }}" value="{{ $row['quantity'] }}"
                                                class="form-control form-control-sm"
                                                wire:change="setQuantity('{{ $row['uuid'] }}', $event.target.value)">
                                     </td>
