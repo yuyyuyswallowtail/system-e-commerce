@@ -1,9 +1,12 @@
 <div>
+    <x-page-header title="History" />
+
+<div>
     <div class="card">
         <div class="card-header">
             <div class="form-row">
                 <div class="col-md-3 mb-2">
-                    <input type="search" class="form-control" placeholder="Search by subject uuid" wire:model.live.debounce.300ms="search">
+                    <input aria-label="Search by subject uuid" type="search" class="form-control" placeholder="Search by subject uuid" wire:model.live.debounce.300ms="search">
                 </div>
                 <div class="col-md-2 mb-2">
                     <select class="form-control" wire:model.live="filters.subject_type" aria-label="Subject type">
@@ -32,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive table-sticky p-0">
             <table class="table text-nowrap">
                 <thead>
                     <tr><th>When</th><th>User</th><th>Actor</th><th>Subject</th><th>Reference</th><th>Action</th><th>Details</th></tr>
@@ -56,4 +59,5 @@
         </div>
         <div class="card-footer">{{ $events->links() }}</div>
     </div>
+</div>
 </div>

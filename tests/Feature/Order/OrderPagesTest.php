@@ -51,7 +51,7 @@ it('shows items, totals and the payment status to the owner', function () {
         ->assertOk()
         ->assertSee($products[0]->name)
         ->assertSee(Money::format(3000, 'USD'))
-        ->assertSee('pending')
+        ->assertSee('Pending')
         ->assertSee('Pay');
 });
 

@@ -68,7 +68,7 @@ it('renders the small boxes with formatted money', function (): void {
         ->assertSee('Published articles')
         ->assertSee('Visible comments')
         ->assertSee('Orders by status')
-        ->assertSee('awaiting_payment')
+        ->assertSee('Awaiting payment')
         ->assertDontSee('Unavailable');
 });
 

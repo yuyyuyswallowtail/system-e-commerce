@@ -1,3 +1,6 @@
+<div>
+    <x-page-header title="Product details" />
+
 <div class="row">
     <div class="col-md-6">
         @if ($notice)
@@ -6,7 +9,7 @@
         @error('product') <div class="alert alert-danger">{{ $message }}</div> @enderror
 
         <div class="card card-primary card-outline">
-            <div class="card-header"><h3 class="card-title">{{ $target ? 'Edit product' : 'New product' }}</h3></div>
+            <div class="card-header"><h2 class="card-title">{{ $target ? 'Edit product' : 'New product' }}</h2></div>
             <form wire:submit="save">
                 <div class="card-body">
                     <div class="form-group">
@@ -51,7 +54,7 @@
                         @error('category_uuid') <span class="invalid-feedback">{{ $message }}</span> @enderror
                     </div>
                 </div>
-                <div class="card-footer"><button type="submit" class="btn btn-primary">Save</button></div>
+                <div class="card-footer"><button type="submit" wire:loading.attr="disabled" class="btn btn-primary">Save</button></div>
             </form>
         </div>
     </div>
@@ -59,36 +62,36 @@
     @if ($target)
         <div class="col-md-6">
             <div class="card card-outline card-warning">
-                <div class="card-header"><h3 class="card-title">Status</h3></div>
+                <div class="card-header"><h2 class="card-title">Status</h2></div>
                 <form wire:submit="changeStatus">
                     <div class="card-body">
-                        <select wire:model="status" class="form-control @error('status') is-invalid @enderror">
+                        <select aria-label="Status" wire:model="status" class="form-control @error('status') is-invalid @enderror">
                             @foreach ($statuses as $status)
                                 <option value="{{ $status }}">{{ ucfirst($status) }}</option>
                             @endforeach
                         </select>
                         @error('status') <span class="invalid-feedback">{{ $message }}</span> @enderror
                     </div>
-                    <div class="card-footer"><button type="submit" class="btn btn-warning">Change status</button></div>
+                    <div class="card-footer"><button type="submit" wire:loading.attr="disabled" class="btn btn-warning">Change status</button></div>
                 </form>
             </div>
 
             <div class="card card-outline card-info">
-                <div class="card-header"><h3 class="card-title">Image</h3></div>
+                <div class="card-header"><h2 class="card-title">Image</h2></div>
                 <form wire:submit="saveImage">
                     <div class="card-body">
                         @if ($target->image_path)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($target->image_path) }}" alt="{{ $target->name }}" class="img-fluid mb-3" style="max-height: 200px;">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($target->image_path) }}" alt="{{ $target->name }}" class="img-fluid mb-3 img-preview">
                         @endif
-                        <input type="file" wire:model="image" accept="image/*" class="form-control-file @error('image') is-invalid @enderror">
+                        <input aria-label="Image" type="file" wire:model="image" accept="image/*" class="form-control-file @error('image') is-invalid @enderror">
                         @error('image') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    <div class="card-footer"><button type="submit" class="btn btn-info">Upload image</button></div>
+                    <div class="card-footer"><button type="submit" wire:loading.attr="disabled" class="btn btn-info">Upload image</button></div>
                 </form>
             </div>
 
             <div class="card card-outline card-danger">
-                <div class="card-header"><h3 class="card-title">Danger zone</h3></div>
+                <div class="card-header"><h2 class="card-title">Danger zone</h2></div>
                 <div class="card-body">
                     @if ($target->trashed())
                         @can('products.restore')
@@ -103,4 +106,5 @@
             </div>
         </div>
     @endif
+</div>
 </div>

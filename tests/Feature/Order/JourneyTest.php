@@ -45,7 +45,7 @@ it('runs the whole journey from registration to a paid order', function () {
 
     $this->actingAs($user)->get('/orders/'.$order->uuid)
         ->assertOk()
-        ->assertSee('paid')
+        ->assertSee('Paid')
         ->assertSee(Money::format(5000, 'USD'));
 
     expect($order->fresh()->status)->toBe('paid')

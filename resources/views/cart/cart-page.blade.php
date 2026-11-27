@@ -1,5 +1,5 @@
 <div>
-    <h2 class="mb-3">Your cart</h2>
+    <x-page-header title="Your cart" subtitle="Review your items before checkout." />
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -19,7 +19,7 @@
                         <tr>
                             <th>Product</th>
                             <th>Price</th>
-                            <th style="width: 140px;">Quantity</th>
+                            <th class="col-qty">Quantity</th>
                             <th>Total</th>
                             <th></th>
                         </tr>
@@ -36,7 +36,7 @@
                                 @if ($row['available'])
                                     <td>{{ \App\Support\Money::format($row['unitPrice'], $row['currency']) }}</td>
                                     <td>
-                                        <input type="number" min="1" max="{{ $maxQuantity }}" value="{{ $row['quantity'] }}"
+                                        <input type="number" aria-label="Quantity for {{ $row['name'] ?? $row['uuid'] }}" min="1" max="{{ $maxQuantity }}" value="{{ $row['quantity'] }}"
                                                class="form-control form-control-sm"
                                                wire:change="setQuantity('{{ $row['uuid'] }}', $event.target.value)">
                                     </td>
@@ -47,7 +47,7 @@
                                     <td class="text-muted">-</td>
                                 @endif
                                 <td class="text-right">
-                                    <button type="button" class="btn btn-sm btn-outline-danger" wire:click="remove('{{ $row['uuid'] }}')">Remove</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" wire:click="remove('{{ $row['uuid'] }}')" wire:confirm="Remove this item from your cart?">Remove</button>
                                 </td>
                             </tr>
                         @endforeach

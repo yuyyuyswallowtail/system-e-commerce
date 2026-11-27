@@ -27,6 +27,8 @@ Status: `accepted` = fixed by the owner. `proposed` = default chosen when writin
 | D-M021 | proposed | `config/shop.php` has a `currencies` map (currency code => minor-unit decimals) read by App\Support\Money; it is not listed in docs/MODULES.md | catalog, cart, order, payment |
 | D-M022 | proposed | Order transitions in config: awaiting_payment to paid or cancelled, paid to processing or cancelled, processing to shipped, shipped to completed; manual ones are only paid to processing, processing to shipped, shipped to completed | order, payment |
 | D-M023 | proposed | `config/permissions.php` roles use `*` for all permissions and `all_except` for all but the listed codes; member is an empty list | identity |
+| D-M024 | proposed | Design system: one stylesheet `public/css/theme.css` with custom-property tokens (colors, type scale, spacing, radius, elevation) linked by both layouts after the AdminLTE CSS, and `config/ui.php` for status badge variants and icon names; Google Fonts is turned off in config/adminlte.php | all |
+| D-M025 | proposed | A neutral anonymous Blade component `x-stat-card` (label, value, optional delta, note, tone) replaces the AdminLTE small-box on the dashboard; a status tone is used only when the number carries meaning | dashboard |
 
 ## How to add a decision
 Append a row with the next ID, status `proposed` or `open`, one sentence, and the modules it affects. If it changes a contract, update `docs/MODULES.md` in the same commit.
@@ -34,3 +36,11 @@ Append a row with the next ID, status `proposed` or `open`, one sentence, and th
 ## Cart pages (prompt 04, stage 2)
 - The add button is registered as `cart.add-button` instead of the namespaced `cart::add-button`, to follow the existing `inventory.availability-badge` convention in this code base.
 - New config key `shop.cart_available_product_status` (value `active`) names the catalog status that lets a cart line be checked out, so views and components never hardcode it.
+
+## UI polish build notes (prompt 11)
+- Behavior is frozen: only Blade views, `public/css/theme.css`, `config/ui.php`, menu presentation in `config/adminlte.php`, demo seed content and tests changed.
+- Tokens, contrast ratios and component rules are documented in `docs/DESIGN.md`; status badge variants and icon names live in `config/ui.php` and a unit test checks every status in `config/shop.php`.
+- Storefront and admin screens share `x-page-header`, `x-empty-state`, `x-status-badge` and `x-stat-card`; every page renders exactly one h1, labelled controls and an empty state.
+- Destructive actions carry `wire:confirm` that names the consequence; submit buttons disable while loading; `ViewRulesTest` enforces this, plus no small-box, inline style, hex color or lorem in views.
+- The sidebar has Shop, Management and Identity section headers; entries keep their `can` keys, so a member never sees staff entries.
+- Old view tests were updated to the new markup (capitalized badge labels, empty-state copy without trailing period); none were deleted or skipped.

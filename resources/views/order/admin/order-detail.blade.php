@@ -52,19 +52,19 @@
     </div>
 
     <div class="card">
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive table-sticky p-0">
             <table class="table text-nowrap mb-0">
                 <thead>
-                    <tr><th>Product</th><th>SKU</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
+                    <tr><th>Product</th><th>SKU</th><th class="num">Price</th><th class="num">Quantity</th><th class="num">Total</th></tr>
                 </thead>
                 <tbody>
                     @foreach ($order->items as $item)
                         <tr wire:key="item-{{ $item->id }}">
                             <td>{{ $item->product_name }}</td>
                             <td>{{ $item->sku }}</td>
-                            <td>{{ \App\Support\Money::format($item->unit_price_amount, $order->currency) }}</td>
-                            <td>{{ $item->quantity }}</td>
-                            <td>{{ \App\Support\Money::format($item->line_total_amount, $order->currency) }}</td>
+                            <td class="money">{{ \App\Support\Money::format($item->unit_price_amount, $order->currency) }}</td>
+                            <td class="num">{{ $item->quantity }}</td>
+                            <td class="money">{{ \App\Support\Money::format($item->line_total_amount, $order->currency) }}</td>
                         </tr>
                     @endforeach
                 </tbody>

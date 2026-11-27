@@ -25,7 +25,7 @@ it('sends guests to login', function () {
 });
 
 it('shows an empty state to a member', function () {
-    $this->actingAs(IdentityKit::user('member'))->get('/notifications')->assertOk()->assertSee('No notifications.');
+    $this->actingAs(IdentityKit::user('member'))->get('/notifications')->assertOk()->assertSee('No notifications');
 });
 
 it('lists only the own notifications and escapes content', function () {

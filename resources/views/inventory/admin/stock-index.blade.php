@@ -1,7 +1,10 @@
+<div>
+    <x-page-header title="Stock" />
+
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-md-5"><input type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search by product uuid"></div>
+            <div class="col-md-5"><input aria-label="Search by product uuid" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search by product uuid"></div>
             <div class="col-md-4">
                 <div class="custom-control custom-switch mt-2">
                     <input type="checkbox" class="custom-control-input" id="lowOnly" wire:model.live="lowOnly">
@@ -10,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body table-responsive p-0">
+    <div class="card-body table-responsive table-sticky p-0">
         <table class="table table-hover text-nowrap">
             <thead>
                 <tr>
@@ -58,4 +61,5 @@
         </table>
     </div>
     <div class="card-footer">{{ $items->links() }}</div>
+</div>
 </div>

@@ -2,7 +2,7 @@
 
 Shared brain between sessions, accounts and models. Keep it short, current and factual. Update it at the end of every stage.
 
-Last updated: 2026-11-26, prompt 08 (comment) stage 2 done.
+Last updated: 2026-11-27, prompt 11 (ui-polish) stage 3 done.
 
 ## 1. How to use
 - Start of session: read this file, run the verify commands in section 3, fix any mismatch here first.
@@ -25,8 +25,9 @@ Legend: not-started, in-progress, done (STAGE CHECK green and pushed), blocked.
 | 08 | 08-comment.md (2 stages) | Comment | feat/08-comment | done | feat(comment): add page embeds and moderation |
 | 09 | 09-dashboard.md (2 stages) | Dashboard | feat/09-dashboard | done | feat(dashboard): add admin dashboard page |
 | 10 | 10-finalize.md (2 stages) | journey test, README, hardening | feat/10-finalize | done | docs: add README and finalize hardening review |
+| 11 | 11-ui-polish.md (3 stages) | design pass: tokens, storefront and auth, admin | feat/11-ui-polish | done | feat(ui): redesign admin screens and finalize design system |
 Prompt files `NN-<name>.md` live in `prompts/` and are git-ignored. Branches are chained: each prompt branches from the previous prompt branch; the owner merges `feat/finalize` into `main` at the end. They may be missing on a fresh clone: ask the owner.
-Run order: 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10. Build providers before callers.
+Run order: 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11. Build providers before callers.
 
 ## 3. Verify commands (copy-paste from repo root)
 ```
@@ -39,10 +40,13 @@ php artisan test
 
 ## 4. Next step
 
-All prompts 00 to 10 are done. Branch feat/10-finalize holds the finalization work. Next: the owner reviews and merges feat/finalize into main.
+Prompt 11 (UI polish) is done on branch feat/11-ui-polish: tokens, storefront, authentication and admin screens, docs/DESIGN.md. Next: the owner reviews and merges the branch chain; no further prompt is planned.
 
 ## 5. Session log (newest first)
 Format: `date | account/model | what was done | commits | result | blockers`
+- 2026-11-27 | claude | prompt 11 stage 3: admin redesign (page headers, labelled filters, sticky tables, right-aligned money, status badges from config/ui.php, stat-card dashboard without small-box, sidebar section headers, wire:confirm naming consequences, submit buttons disabled while loading, unsaved hint on permissions), AdminPagesTest and ViewRulesTest, docs/DESIGN.md, UI.md and DECISIONS.md finished (full suite green, skipped 0) | feat(ui): redesign admin screens and finalize design system | STAGE CHECK green | none
+- 2026-11-27 | claude | prompt 11 stage 2: storefront and authentication redesign (page-header, empty-state and status-badge components, cards, search and filter bar, responsive stacked tables, labels on every control, skip link, one h1 per page, ux-copy for labels and empty states), DemoDataSeeder with realistic English content (idempotent, keys kept, users untouched), tests first (DomAudit structural audit on 16 pages, empty states, responsive CSS), old view tests updated to the new markup (full suite 856 passed, skipped 0) | feat(ui): redesign storefront and authentication screens | STAGE CHECK green | none
+- 2026-11-27 | claude | prompt 11 stage 1: design tokens in public/css/theme.css (9-step neutral scale, one green accent, tuned status colors, fixed type scale, 4/8 spacing, one radius, two elevations), restyled buttons, cards, tables, forms, badges, alerts, pagination, navbar, sidebar, breadcrumbs, modals and focus rings, config/ui.php (status badge variants, stat tones, icons), x-stat-card component, both layouts link theme.css after the AdminLTE CSS, Google Fonts off, inline styles replaced by classes, welcome view rewritten without Tailwind, docs/DESIGN.md, D-M024 and D-M025 (tests first: red 57 failed, green 61 passed; full suite 820 passed, skipped 0) | feat(ui): add design tokens and shared components | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 10 stage 1: journey tests (customer, admin, content, failure journeys), authorization matrix tests (auth and can middleware on every route, no duplicate route names, admin GET routes as guest, member and super_admin), DemoDataSeeder (idempotent, leaves users alone) and DatabaseSeeder wiring, Pest RefreshDatabase for Journeys (full suite 753 passed, skipped 0) | test: add journey tests and authorization matrix | STAGE CHECK green | none
 - 2026-11-27 | claude | prompt 10 stage 2: hardening review with fixes (Livewire AuditLog and UserIndex, comment admin views), HardeningTest and PermissionCatalogTest, README.md rewrite, docs/MODULES.md synced (full suite 759 passed, skipped 0) | docs: add README and finalize hardening review | STAGE CHECK green | none
 - 2026-11-26 | claude | prompt 09 stage 1: DashboardService (forBlock sales, stock, content, summary; per-provider try/catch with warnings and logged class only; Laravel Cache per provider with shop.stats_cache_ttl, 0 disables, failures never cached; refresh), DashboardServiceProvider using the module.stats tag, config shop.dashboard, FakeStatsProvider, tests (red 12 failed, green 17 passed, skipped 0) | feat(dashboard): add stats aggregation service and cache | STAGE CHECK green | none

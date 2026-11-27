@@ -1,12 +1,15 @@
 <div>
+    <x-page-header title="Orders" />
+
+<div>
     <div class="card">
         <div class="card-header">
             <div class="form-row">
                 <div class="col-md-4 mb-2">
-                    <input type="search" class="form-control" placeholder="Search by order uuid or user email" wire:model.live.debounce.300ms="search">
+                    <input aria-label="Search by order uuid or user email" type="search" class="form-control" placeholder="Search by order uuid or user email" wire:model.live.debounce.300ms="search">
                 </div>
                 <div class="col-md-2 mb-2">
-                    <select class="form-control" wire:model.live="status">
+                    <select aria-label="Status" class="form-control" wire:model.live="status">
                         <option value="">All statuses</option>
                         @foreach ($statuses as $status)
                             <option value="{{ $status }}">{{ $status }}</option>
@@ -23,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive table-sticky p-0">
             <table class="table text-nowrap">
                 <thead>
                     <tr><th>Order</th><th>User</th><th>Placed</th><th>Status</th><th>Total</th></tr>
@@ -35,7 +38,7 @@
                             <td>{{ $order->user?->email }}</td>
                             <td>{{ $order->created_at?->format('Y-m-d H:i') }}</td>
                             <td><span class="badge badge-secondary">{{ $order->status }}</span></td>
-                            <td>{{ \App\Support\Money::format($order->total_amount, $order->currency) }}</td>
+                            <td class="money">{{ \App\Support\Money::format($order->total_amount, $order->currency) }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="5" class="text-muted">No orders found.</td></tr>
@@ -45,4 +48,5 @@
         </div>
         <div class="card-footer">{{ $orders->links() }}</div>
     </div>
+</div>
 </div>

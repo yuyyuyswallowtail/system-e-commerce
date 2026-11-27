@@ -1,9 +1,12 @@
+<div>
+    <x-page-header title="Articles" />
+
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-md-4"><input type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search title or summary"></div>
+            <div class="col-md-4"><input aria-label="Search title or summary" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Search title or summary"></div>
             <div class="col-md-2">
-                <select wire:model.live="filters.status" class="form-control">
+                <select aria-label="Status" wire:model.live="filters.status" class="form-control">
                     <option value="">All statuses</option>
                     @foreach ($statuses as $status)
                         <option value="{{ $status }}">{{ ucfirst($status) }}</option>
@@ -11,7 +14,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <select wire:model.live="deleted" class="form-control">
+                <select aria-label="Deleted" wire:model.live="deleted" class="form-control">
                     @foreach ($modes as $mode)
                         <option value="{{ $mode }}">Deleted: {{ $mode }}</option>
                     @endforeach
@@ -24,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body table-responsive p-0">
+    <div class="card-body table-responsive table-sticky p-0">
         <table class="table table-hover text-nowrap">
             <thead>
                 <tr>
@@ -55,4 +58,5 @@
         </table>
     </div>
     <div class="card-footer">{{ $articles->links() }}</div>
+</div>
 </div>
