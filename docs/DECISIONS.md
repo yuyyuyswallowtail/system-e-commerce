@@ -27,6 +27,8 @@ Status: `accepted` = fixed by the owner. `proposed` = default chosen when writin
 | D-M021 | proposed | `config/shop.php` has a `currencies` map (currency code => minor-unit decimals) read by App\Support\Money; it is not listed in docs/MODULES.md | catalog, cart, order, payment |
 | D-M022 | proposed | Order transitions in config: awaiting_payment to paid or cancelled, paid to processing or cancelled, processing to shipped, shipped to completed; manual ones are only paid to processing, processing to shipped, shipped to completed | order, payment |
 | D-M023 | proposed | `config/permissions.php` roles use `*` for all permissions and `all_except` for all but the listed codes; member is an empty list | identity |
+| D-M024 | proposed | Design system: one stylesheet `public/css/theme.css` with custom-property tokens (colors, type scale, spacing, radius, elevation) linked by both layouts after the AdminLTE CSS, and `config/ui.php` for status badge variants and icon names; Google Fonts is turned off in config/adminlte.php | all |
+| D-M025 | proposed | A neutral anonymous Blade component `x-stat-card` (label, value, optional delta, note, tone) replaces the AdminLTE small-box on the dashboard; a status tone is used only when the number carries meaning | dashboard |
 
 ## How to add a decision
 Append a row with the next ID, status `proposed` or `open`, one sentence, and the modules it affects. If it changes a contract, update `docs/MODULES.md` in the same commit.

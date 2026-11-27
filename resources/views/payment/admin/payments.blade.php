@@ -5,7 +5,7 @@
 
     <div class="card">
         <div class="card-header">
-            <select class="form-control" style="max-width: 240px;" wire:model.live="status" aria-label="Status">
+            <select class="form-control filter-select" wire:model.live="status" aria-label="Status">
                 <option value="">All statuses</option>
                 @foreach ($statuses as $status)
                     <option value="{{ $status }}">{{ $status }}</option>

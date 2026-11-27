@@ -14,7 +14,7 @@
         <livewire:inventory.availability-badge :product-uuid="$product->uuid" :key="'badge-'.$product->uuid" />
         <livewire:cart.add-button :product-uuid="$product->uuid" :key="'cart-'.$product->uuid" />
         <p>SKU: {{ $product->sku }}</p>
-        <p style="white-space: pre-line;">{{ $product->description }}</p>
+        <p class="pre-line measure">{{ $product->description }}</p>
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">Back to products</a>
     </div>
     <div class="col-12 mt-4">

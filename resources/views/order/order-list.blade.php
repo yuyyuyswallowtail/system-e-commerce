@@ -3,7 +3,7 @@
 
     <div class="form-group">
         <label for="order-status">Status</label>
-        <select id="order-status" class="form-control" style="max-width: 240px;" wire:model.live="status">
+        <select id="order-status" class="form-control filter-select" wire:model.live="status">
             <option value="">All</option>
             @foreach ($statuses as $status)
                 <option value="{{ $status }}">{{ $status }}</option>

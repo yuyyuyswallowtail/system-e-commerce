@@ -2,6 +2,10 @@
 
 @section('title', $title ?? config('app.name'))
 
+@section('adminlte_css')
+    @include('layouts.partials.theme-link')
+@endsection
+
 @section('classes_body', 'layout-top-nav')
 
 @section('body')
@@ -9,7 +13,7 @@
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="{{ url('/') }}" class="navbar-brand">
-                    <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
+                    <span class="brand-text">{{ config('app.name') }}</span>
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#storefront-nav" aria-controls="storefront-nav" aria-expanded="false" aria-label="Toggle navigation">

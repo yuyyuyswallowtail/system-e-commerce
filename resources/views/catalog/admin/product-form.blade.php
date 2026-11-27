@@ -78,7 +78,7 @@
                 <form wire:submit="saveImage">
                     <div class="card-body">
                         @if ($target->image_path)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($target->image_path) }}" alt="{{ $target->name }}" class="img-fluid mb-3" style="max-height: 200px;">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($target->image_path) }}" alt="{{ $target->name }}" class="img-fluid mb-3 img-preview">
                         @endif
                         <input type="file" wire:model="image" accept="image/*" class="form-control-file @error('image') is-invalid @enderror">
                         @error('image') <span class="text-danger">{{ $message }}</span> @enderror

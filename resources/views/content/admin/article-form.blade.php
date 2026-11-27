@@ -62,7 +62,7 @@
                 <form wire:submit="saveCover">
                     <div class="card-body">
                         @if ($target->cover_path)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($target->cover_path) }}" alt="{{ $target->title }}" class="img-fluid mb-3" style="max-height: 200px;">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($target->cover_path) }}" alt="{{ $target->title }}" class="img-fluid mb-3 img-preview">
                         @endif
                         <input type="file" wire:model="cover" accept="image/*" class="form-control-file @error('cover') is-invalid @enderror">
                         @error('cover') <span class="text-danger">{{ $message }}</span> @enderror

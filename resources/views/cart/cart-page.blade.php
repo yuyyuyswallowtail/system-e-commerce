@@ -19,7 +19,7 @@
                         <tr>
                             <th>Product</th>
                             <th>Price</th>
-                            <th style="width: 140px;">Quantity</th>
+                            <th class="col-qty">Quantity</th>
                             <th>Total</th>
                             <th></th>
                         </tr>

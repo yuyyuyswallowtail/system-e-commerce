@@ -24,3 +24,6 @@ Validate mime and size from config, store on the `public` disk with random file 
 
 ## 5. Accessibility and copy
 Labels for every input, buttons with text, English copy only, short messages.
+
+## 6. Design system
+Colors, type, spacing, radius, elevation and component rules live in `docs/DESIGN.md`. The only stylesheet is `public/css/theme.css`, status badge variants and icon names are in `config/ui.php`, and the stat card is `<x-stat-card>`. Views never use inline styles or hex colors.
