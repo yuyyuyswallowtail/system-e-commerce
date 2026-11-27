@@ -1,19 +1,48 @@
+@php
+    $availability = [];
+
+    try {
+        $availability = app(\App\Modules\Inventory\Contracts\Inventory::class)->availability($products->pluck('uuid')->all());
+    } catch (\Throwable $e) {
+        report($e);
+    }
+
+    $activeCategory = (string) ($filters['category_id'] ?? '');
+@endphp
+
 <div>
-    <x-page-header title="Products" subtitle="Browse the range and add what you need to your cart." />
+    <section class="hero" aria-labelledby="hero-title">
+        <h1 class="hero__title" id="hero-title">{{ __('storefront.hero.headline') }}</h1>
+        <p class="hero__text">{{ __('storefront.hero.text') }}</p>
+        <div class="hero__actions">
+            <a href="{{ route('products.index') }}" class="btn btn-primary">{{ __('storefront.hero.primary') }}</a>
+            <a href="{{ route('articles.index') }}" class="btn btn-outline-secondary">{{ __('storefront.hero.secondary') }}</a>
+        </div>
+    </section>
+
+    <ul class="trust-strip" aria-label="{{ __('storefront.trust.label') }}">
+        @foreach ((array) __('storefront.trust.items') as $item)
+            <li class="trust-strip__item">
+                <i class="{{ $item['icon'] }} trust-strip__icon" aria-hidden="true"></i>
+                <span>
+                    <span class="trust-strip__title">{{ $item['title'] }}</span>
+                    <span class="trust-strip__text">{{ $item['text'] }}</span>
+                </span>
+            </li>
+        @endforeach
+    </ul>
+
+    <ul class="chips" aria-label="{{ __('storefront.chips.label') }}">
+        <li><button type="button" class="chip" wire:click="$set('filters.category_id', '')" aria-pressed="{{ $activeCategory === '' ? 'true' : 'false' }}">{{ __('storefront.chips.all') }}</button></li>
+        @foreach ($categories as $category)
+            <li wire:key="chip-{{ $category->id }}"><button type="button" class="chip" wire:click="$set('filters.category_id', '{{ $category->id }}')" aria-pressed="{{ $activeCategory === (string) $category->id ? 'true' : 'false' }}">{{ $category->name }}</button></li>
+        @endforeach
+    </ul>
 
     <div class="filter-bar" role="search">
         <div class="filter-bar__field filter-bar__field--grow form-group">
             <label for="product-search">Search</label>
             <input id="product-search" type="search" wire:model.live.debounce.300ms="search" class="form-control" placeholder="Name or SKU" autocomplete="off">
-        </div>
-        <div class="filter-bar__field form-group">
-            <label for="product-category">Category</label>
-            <select id="product-category" wire:model.live="filters.category_id" class="form-control">
-                <option value="">All categories</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
         </div>
         <div class="form-group">
             <span class="d-block mb-1 font-weight-bold" id="product-sort-label">Sort by</span>
@@ -36,26 +65,7 @@
     <div class="row">
         @forelse ($products as $product)
             <div class="col-12 col-sm-6 col-lg-4 mb-4" wire:key="product-{{ $product->id }}">
-                <article class="card product-card">
-                    <div class="product-card__media">
-                        @if ($product->image_path)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk(config('shop.uploads.disk'))->url($product->image_path) }}" alt="{{ $product->name }}" loading="lazy">
-                        @else
-                            <i class="{{ config('ui.icons.products') }} fa-2x" aria-hidden="true"></i>
-                        @endif
-                    </div>
-                    <div class="product-card__body">
-                        @if ($product->category)
-                            <p class="product-card__category">{{ $product->category->name }}</p>
-                        @endif
-                        <h2 class="product-card__name"><a href="{{ route('products.show', ['product' => $product->uuid]) }}">{{ $product->name }}</a></h2>
-                        <p class="product-card__price">{{ \App\Support\Money::format($product->price_amount, $product->currency) }}</p>
-                        <livewire:inventory.availability-badge :product-uuid="$product->uuid" :key="'badge-'.$product->uuid" />
-                        <div class="product-card__actions">
-                            <livewire:cart.add-button :product-uuid="$product->uuid" :key="'cart-'.$product->uuid" />
-                        </div>
-                    </div>
-                </article>
+                <x-product-card :product="$product" :available="$availability[$product->uuid] ?? null" />
             </div>
         @empty
             <div class="col-12">

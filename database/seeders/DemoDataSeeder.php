@@ -8,10 +8,10 @@ use App\Models\User;
 use App\Modules\Catalog\Models\Category;
 use App\Modules\Catalog\Models\Product;
 use App\Modules\Content\Models\Article;
+use App\Modules\Inventory\Models\StockItem as StockRow;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use App\Modules\Inventory\Models\StockItem as StockRow;
 
 class DemoDataSeeder extends Seeder
 {

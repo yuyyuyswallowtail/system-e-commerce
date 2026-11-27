@@ -74,3 +74,13 @@ System font stack (`--font-sans`), fixed scale in rem: 12, 14, 16, 20, 24, 32 px
 
 ## 7. Review checklist (scripted)
 `tests/Feature/Ui/AdminPagesTest.php` and `StorefrontPagesTest.php` assert one h1, lang, viewport, labels, alt text and accessible names on every page. `tests/Unit/Ui/ViewRulesTest.php` enforces confirmations on destructive actions, no inline styles, hex colors, lorem or small-box in views, and at most 15 commented `!important` in the stylesheet. `ContrastTest` enforces the token contrast ratios.
+
+## 8. Storefront (prompt 12)
+- Home: hero with one headline, one sentence of value and two actions (primary "Shop products", secondary "Read articles"), category chips wired to the existing category filter, search and sort kept, a trust strip that states only what the application really does, then the product grid.
+- Product card (`x-product-card`): 4:3 visual, category label, name clamped to two lines, price with tabular figures, stock badge, quantity and one primary "Add to cart". Out of stock shows a disabled action with the reason. Hover and `:focus-visible` states are visible.
+- Product detail: two columns on desktop (visual left, price, stock, description, add to cart and a details list with SKU, category and availability on the right), stacked on mobile.
+- Articles: the newest article is a large featured card, the rest sit in a grid with cover, date and excerpt. Article detail has a readable measure (max 72ch), the cover and a back link.
+- Footer: three columns (shop name with one line of description, shop links, account links) and the copyright line from config. Each footer `nav` has an `aria-label`.
+- Visuals use CSS, Font Awesome Free and inline SVG only. Tint and icon maps per category live in `config/ui.php`, tint tokens (AA contrast) in `public/css/theme.css`. Visible copy lives in `lang/en/storefront.php`.
+- Honesty: no fake reviews, ratings, countdowns or invented contact details. Stock numbers shown are the real stock.
+- Every storefront page renders exactly one h1, `alt` on every image and touch targets of at least 44 px from 360 px width.

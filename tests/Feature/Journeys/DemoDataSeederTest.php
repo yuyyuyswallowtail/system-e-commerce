@@ -6,10 +6,10 @@ use App\Models\User;
 use App\Modules\Catalog\Models\Category;
 use App\Modules\Catalog\Models\Product;
 use App\Modules\Content\Models\Article;
+use App\Modules\Inventory\Models\StockItem as StockRow;
 use Database\Seeders\DemoDataSeeder;
 use Tests\Support\CatalogKit;
 use Tests\Support\IdentityKit;
-use App\Modules\Inventory\Models\StockItem as StockRow;
 
 it('seeds demo data idempotently and leaves existing users alone', function () {
     $existing = IdentityKit::user();

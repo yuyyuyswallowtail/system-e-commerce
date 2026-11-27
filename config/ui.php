@@ -74,7 +74,6 @@ return [
         'empty' => 'fas fa-folder-open',
     ],
 
-
     // Product visual and article cover: tint tokens live in public/css/theme.css (--tint-*-bg and --tint-*-fg).
     'visuals' => [
         'tints' => ['sage', 'sand', 'sky', 'clay', 'stone'],

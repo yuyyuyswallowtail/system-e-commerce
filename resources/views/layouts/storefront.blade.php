@@ -80,9 +80,50 @@
             </div>
         </main>
 
-        <footer class="main-footer">
+        <footer class="main-footer site-footer">
             <div class="container">
-                <strong>{{ config('app.name') }}</strong>
+                <div class="site-footer__grid">
+                    <div>
+                        <strong class="site-footer__brand">{{ config('app.name') }}</strong>
+                        <p class="mb-0">{{ __('storefront.footer.description') }}</p>
+                    </div>
+                    <nav aria-label="{{ __('storefront.footer.shop_label') }}">
+                        <h2 class="site-footer__heading">{{ __('storefront.footer.shop_heading') }}</h2>
+                        <ul class="site-footer__list">
+                            @if (Route::has('products.index'))
+                                <li><a href="{{ route('products.index') }}">{{ __('storefront.nav.products') }}</a></li>
+                            @endif
+                            @if (Route::has('articles.index'))
+                                <li><a href="{{ route('articles.index') }}">{{ __('storefront.nav.articles') }}</a></li>
+                            @endif
+                        </ul>
+                    </nav>
+                    <nav aria-label="{{ __('storefront.footer.account_label') }}">
+                        <h2 class="site-footer__heading">{{ __('storefront.footer.account_heading') }}</h2>
+                        <ul class="site-footer__list">
+                            @guest
+                                @if (Route::has('login'))
+                                    <li><a href="{{ route('login') }}">{{ __('storefront.nav.login') }}</a></li>
+                                @endif
+                                @if (Route::has('register'))
+                                    <li><a href="{{ route('register') }}">{{ __('storefront.nav.register') }}</a></li>
+                                @endif
+                            @endguest
+                            @auth
+                                @if (Route::has('me'))
+                                    <li><a href="{{ route('me') }}">{{ __('storefront.nav.account') }}</a></li>
+                                @endif
+                                @if (Route::has('orders.index'))
+                                    <li><a href="{{ route('orders.index') }}">{{ __('storefront.nav.orders') }}</a></li>
+                                @endif
+                                @if (Route::has('cart.index'))
+                                    <li><a href="{{ route('cart.index') }}">{{ __('storefront.nav.cart') }}</a></li>
+                                @endif
+                            @endauth
+                        </ul>
+                    </nav>
+                </div>
+                <p class="site-footer__legal">{{ __('storefront.footer.copyright', ['year' => now()->year, 'name' => config('app.name')]) }}</p>
             </div>
         </footer>
     </div>
